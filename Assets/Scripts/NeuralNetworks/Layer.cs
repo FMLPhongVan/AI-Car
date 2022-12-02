@@ -17,10 +17,10 @@ public class Layer
         _layerId = layerId;
     }
 
-    public float[,] GetWeights(NeuralNetwork network)
+    public double[,] GetWeights(NeuralNetwork network)
     {
         Layer nextLayer = network.Layers[_layerId + 1];
-        float[,] weights = new float[Neurons.Count, nextLayer.Neurons.Count];
+        double[,] weights = new double[Neurons.Count, nextLayer.Neurons.Count];
         for (int i = 0; i < Neurons.Count; ++i)
         {
             for (int j = 0; j < nextLayer.Neurons.Count; ++j)

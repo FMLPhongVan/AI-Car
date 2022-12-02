@@ -35,14 +35,15 @@ public class AIController : MonoBehaviour
     void Update()
     {
         if (!Alive) return;
-        List<float> inputs = new List<float>();
+        List<double> inputs = new List<double>();
         for (int i = 0; i < CarController.Sensors.Count; ++i)
             inputs.Add(CarController.Sensors[i].HitNormal);
 
-        inputs.Add(CarController.Speed / CarController.Acceleration);
-        float[] output = network.FeedForward(inputs);
-        CarController.CarTurn = (float)output[0];
-        CarController.CarDrive = (float)output[1];
+        inputs.Add(CarController.Speed);
+        double[] output = network.FeedForward(inputs);
+        CarController.ForceInput = (float)output[0];
+        CarController.SteeringAngle = (float)output[1];
+        //CarController.IsBraking = output[2] < 0.5f;
         CalculateFitness();
 
         if (BestFitness > OverallFitness)
@@ -65,7 +66,7 @@ public class AIController : MonoBehaviour
         _movement = Vector3.Distance(CarController.Car.transform.position, _lastPosition);
         if (CarController.CarCheckpoint.GetDistanceToNextCheckpoint() >= _lastCheckpointDistance)
         {
-            _movement *= (float)-1.5;
+            _movement *= -2;
         }
 
         TravelDistance += _movement;
@@ -82,11 +83,15 @@ public class AIController : MonoBehaviour
 
     public void Stop()
     {
-        Alive = false;
-        CarController.CarTurn = 0;
-        CarController.CarDrive = 0;
-        CarController._carRigidBody.velocity = Vector3.zero;
         network.Fitness = OverallFitness;
+        if (System.Math.Abs(CarController.Car.transform.rotation.x) > 8 || System.Math.Abs(CarController.Car.transform.rotation.z) > 8)
+            network.Fitness = OverallFitness / 2;
+        if (network.Fitness < 0) network.Fitness = 0;
+        Alive = false;
+        CarController.SteeringAngle = 0;
+        CarController.ForceInput = 0;
+        CarController.IsBraking = false;
+        CarController._carRigidBody.velocity = Vector3.zero;
         CarController._carRigidBody.isKinematic = true;
     }
 

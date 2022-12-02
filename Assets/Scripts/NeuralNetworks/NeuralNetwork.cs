@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class NeuralNetwork
     public List<Layer> Layers;
     public int[] LayerStructure;
     public float Fitness;
-    public float FitnessRatio;
+    public double FitnessRatio;
 
     public NeuralNetwork(int[] layerStructure)
     {
@@ -56,12 +57,17 @@ public class NeuralNetwork
         NeuralNetwork NN = new NeuralNetwork(numStrucutre);
 
         // Get the encoded value
-        string[] element = lines[1].Split(new char[] { ',' });
+        string[] element = lines[1].Split(", ");
 
-        List<float> encoded = new List<float>();
+        List<double> encoded = new List<double>();
         for (int i = 0; i < element.Length; i++)
         {
-            encoded.Add((float)Convert.ToDouble(element[i]));
+            Debug.Log(element[i]);
+            float num = (float)(Convert.ToDouble(element[i], CultureInfo.InvariantCulture));
+            if (num < -1f) num = -1f;
+            if (num > 1f) num = 1f;
+            encoded.Add(num);
+            Debug.Log(num);
         }
 
         //Update our NN with the value
@@ -72,9 +78,9 @@ public class NeuralNetwork
         this.FitnessRatio = 0f;
     }
 
-    public List<float> Encode()
+    public List<double> Encode()
     {
-        List<float> encoded = new List<float>();
+        List<double> encoded = new List<double>();
 
         foreach (Layer layer in Layers)
         {
@@ -89,7 +95,7 @@ public class NeuralNetwork
         return encoded;
     }
 
-    public void Decode(List<float> encoded)
+    public void Decode(List<double> encoded)
     {
         int index = 0;
         foreach (Layer layer in Layers)
@@ -107,7 +113,7 @@ public class NeuralNetwork
         }
     }
 
-    public float[] FeedForward(List<float> inputs)
+    public double[] FeedForward(List<double> inputs)
     {
         if (inputs.Count != Layers[0].Neurons.Count) return null;
         
@@ -120,7 +126,7 @@ public class NeuralNetwork
                 if (i == 0) neuron.Value = inputs[j];
                 else
                 {
-                    float sum = 0;
+                    double sum = 0;
                     for (int k = 0; k < Layers[i - 1].Neurons.Count; ++k)
                         sum += Layers[i - 1].Neurons[k].Value * neuron.Edges[k].Weight;
                     
@@ -134,7 +140,7 @@ public class NeuralNetwork
 
         Layer lastLayer = Layers[Layers.Count - 1];
         int num = lastLayer.Neurons.Count;
-        float[] outputs = new float[num];
+        double[] outputs = new double[num];
         for (int i = 0; i < num; ++i)
             outputs[i] = lastLayer.Neurons[i].Value;
         return outputs;
@@ -142,24 +148,48 @@ public class NeuralNetwork
 
     public void Save()
     {
-        StreamWriter write = new StreamWriter("./records/nn" + (int)Fitness + ".txt", true);
+        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + (int)Fitness + ".txt", true);
 
         for (int i = 0; i < LayerStructure.Length - 1; ++i)
             write.Write(LayerStructure[i] + ", ");
 
         write.Write(LayerStructure[LayerStructure.Length - 1] + "\n");
-        List<float> encoded = Encode();
+        List<double> encoded = Encode();
         for (int i = 0; i < encoded.Count - 1; i++)
         {
-            write.Write(encoded[i] + ", ");
+            if (encoded[i] > 1f || encoded[i] < -1f) Debug.Log("Error: " + encoded[i]);
+            write.Write(encoded[i]);
+            write.Write(", ");
         }
         write.Write(encoded[encoded.Count - 1]);
+        write.Write("\n");
 
         write.Close();
     }
 
-    private float sigmoid(float x)
+    public void Save(String fileName)
     {
-        return 1 / (1 + (float)Math.Exp(-x));
+        StreamWriter write = new StreamWriter("./records/" + fileName + "/bestcar/bc" + (int)Fitness + ".txt", true);
+
+        for (int i = 0; i < LayerStructure.Length - 1; ++i)
+            write.Write(LayerStructure[i] + ", ");
+
+        write.Write(LayerStructure[LayerStructure.Length - 1] + "\n");
+        List<double> encoded = Encode();
+        for (int i = 0; i < encoded.Count - 1; i++)
+        {
+            if (encoded[i] > 1f || encoded[i] < -1f) Debug.Log("Error: " + encoded[i]);
+            write.Write(encoded[i]);
+            write.Write(", ");
+        }
+        write.Write(encoded[encoded.Count - 1]);
+        write.Write("\n");
+
+        write.Close();
+    }
+
+    private double sigmoid(double x)
+    {
+        return 1 / (1 + Math.Exp(-x));
     }
 }

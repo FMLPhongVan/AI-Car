@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking.Types;
 
 public class Academy : MonoBehaviour
 {
+    public string FileName = "";
     public int NumGens;
     public int NumSimulate;
     public float MutationRate;
@@ -13,7 +13,7 @@ public class Academy : MonoBehaviour
     public TracksManager TrackManager;
     public GeneticController species;
     public int CurrentGenome;
-    public float BestGenomeFitness;
+    public float BestGenomeFitness = -100000;
     public int BatchSimulate;
     public int Generation = 1;
     public AIController BestCar;
@@ -24,7 +24,11 @@ public class Academy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        species = new GeneticController(NumGens, MutationRate);
+        Time.timeScale = 4f;
+        if (FileName == "")
+            species = new GeneticController(NumGens, MutationRate);
+        else
+            species = new GeneticController(NumGens, MutationRate, FileName);
         _cars = new GameObject[NumSimulate];
         _aiControllers = new AIController[NumSimulate];
         BestCar = _aiControllers[0];
@@ -34,42 +38,57 @@ public class Academy : MonoBehaviour
         
         for (int i = 0; i < NumSimulate; i++)
         {
+            //_cars[i] = Instantiate(Car, StartPosition + 2 * i * Vector3.up, Car.transform.rotation);
             _cars[i] = Instantiate(Car, StartPosition, Car.transform.rotation);
             _aiControllers[i] = _cars[i].GetComponent<AIController>();
             _aiControllers[i].network = species.Population[i];
+        }
+
+        for (int i = 0; i < NumSimulate; ++i)
+        {
+            for (int j = 0; j < NumSimulate; ++j)
+            {
+                if (i != j)
+                {
+                    Physics.IgnoreCollision(_cars[i].GetComponentInChildren<BoxCollider>(), _cars[j].GetComponentInChildren<BoxCollider>(), true);
+                    Physics.IgnoreCollision(_cars[i].GetComponentInChildren<BoxCollider>(), _cars[j].GetComponentInChildren<WheelCollider>(), true);
+                    Physics.IgnoreCollision(_cars[i].GetComponentInChildren<WheelCollider>(), _cars[j].GetComponentInChildren<BoxCollider>(), true);
+                    Physics.IgnoreCollision(_cars[i].GetComponentInChildren<WheelCollider>(), _cars[j].GetComponentInChildren<WheelCollider>(), true);
+                }
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float bestCarFitness = 0;
+        float bestCarFitness = -1;
         bool allCarsDead = true;
         foreach (AIController car in _aiControllers)
         {
             if (car.Alive)
             {
                 allCarsDead = false;
-                if (car.OverallFitness > bestCarFitness)
+                if (car.network.Fitness > BestGenomeFitness)
                 {
-                    bestCarFitness = car.OverallFitness;
-                    BestCar = car;  
-                    if (BestCar.OverallFitness > BestGenomeFitness)
-                    {
-                        BestGenomeFitness = BestCar.OverallFitness;
-                    }
+                    BestGenomeFitness = car.network.Fitness;
+                    BestCar = car;
                 }
-
             }
         }
 
         if (allCarsDead)
         { 
-            Debug.Log("All Cars Dead");
+            //Debug.Log("All Cars Dead");
             // If we have simualted all genomes, reset and get next gen
             if (CurrentGenome == NumGens)
             {
-                Debug.Log("New Gen");
+                if (BestCar != null && BestCar.network != null)
+                {
+                    species.Population.Add(BestCar.network);
+                    BestCar.network.Save("trackC");
+                }
+                //Debug.Log("New Gen");
                 species.NextGen();
                 for (int i = 0; i < NumSimulate; i++)
                 {
@@ -83,12 +102,12 @@ public class Academy : MonoBehaviour
             {
                 if (CurrentGenome + NumSimulate <= NumGens)
                 {
-                    Debug.Log("Full Sim");
+                    //Debug.Log("Full Sim");
                     BatchSimulate = NumSimulate;
                 }
                 else
                 {
-                    Debug.Log("Partial Sim");
+                    //Debug.Log("Partial Sim");
                     BatchSimulate = NumGens - CurrentGenome;
                 }
 

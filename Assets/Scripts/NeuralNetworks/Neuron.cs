@@ -7,9 +7,9 @@ using UnityEngine;
 public class Neuron
 {
     public List<Edge> Edges;
-    public float Value;
-    public float Delta;
-    public float Bias;
+    public double Value;
+    public double Delta;
+    public double Bias;
 
     public Neuron()
     {

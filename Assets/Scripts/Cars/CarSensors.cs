@@ -21,15 +21,17 @@ public class CarSensors : MonoBehaviour
         HitNormal = 1;
         RaycastHit hitInfo;
         bool hit = Physics.Raycast(Car.transform.position, direction, out hitInfo, direction.magnitude, ~(1 << 6 | 1 << 2));
+        Vector3 sensorPos = Car.transform.position;
+        sensorPos.Set(sensorPos.x, sensorPos.y + 0.5f, sensorPos.z);
         if (hitInfo.collider != null)
         {
             HitNormal = hitInfo.distance / direction.magnitude;
-            Debug.DrawRay(Car.transform.position, direction, Color.red);
+            Debug.DrawRay(sensorPos, direction, Color.red);
         } 
         else
         {
             Distance = 1;
-            Debug.DrawRay(Car.transform.position, direction, Color.green);
+            Debug.DrawRay(sensorPos, direction, Color.green);
         }
     }
 }
