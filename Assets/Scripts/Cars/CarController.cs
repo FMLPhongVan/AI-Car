@@ -31,9 +31,6 @@ public class CarController : MonoBehaviour
     float _idleTime = 10f;
     float _timeLeft = 0;
     int _firstCheckpoint;
-    float _driftSpeedMoving = 0.9f;
-    float _driftSpeedStatic = 0.9f;
-    float _maxSideways = 0.5f;
 
     public float ForceInput;
     public float SteeringAngle;

@@ -37,7 +37,7 @@ public class AIController : MonoBehaviour
         if (!Alive) return;
         List<double> inputs = new List<double>();
         for (int i = 0; i < CarController.Sensors.Count; ++i)
-            inputs.Add(CarController.Sensors[i].HitNormal);
+            inputs.Add(CarController.Sensors[i].HitDistance);
 
         inputs.Add(CarController.Speed);
         double[] output = network.FeedForward(inputs);
@@ -71,7 +71,7 @@ public class AIController : MonoBehaviour
 
         TravelDistance += _movement;
         for (int i = 0; i < CarController.Sensors.Count; ++i)
-            _averageSensor += CarController.Sensors[i].HitNormal;
+            _averageSensor += CarController.Sensors[i].HitDistance;
 
         _averageSensor /= CarController.Sensors.Count;
         _lastCheckpointDistance = CarController.CarCheckpoint.GetDistanceToNextCheckpoint();

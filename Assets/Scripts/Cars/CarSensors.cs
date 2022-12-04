@@ -5,8 +5,7 @@ using UnityEngine;
 public class CarSensors : MonoBehaviour
 {
     public GameObject Car;
-    public float Distance = 0;
-    public float HitNormal = 0;
+    public float HitDistance = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +17,18 @@ public class CarSensors : MonoBehaviour
     void LateUpdate()
     {
         Vector3 direction = gameObject.transform.position - Car.transform.position;
-        HitNormal = 1;
-        RaycastHit hitInfo;
-        bool hit = Physics.Raycast(Car.transform.position, direction, out hitInfo, direction.magnitude, ~(1 << 6 | 1 << 2));
+        HitDistance = 1;
+        Physics.Raycast(Car.transform.position, direction, out RaycastHit hitInfo, direction.magnitude, ~(1 << 6 | 1 << 2));
         Vector3 sensorPos = Car.transform.position;
         sensorPos.Set(sensorPos.x, sensorPos.y + 0.5f, sensorPos.z);
         if (hitInfo.collider != null)
         {
-            HitNormal = hitInfo.distance / direction.magnitude;
+            HitDistance = hitInfo.distance / direction.magnitude;
             Debug.DrawRay(sensorPos, direction, Color.red);
         } 
         else
         {
-            Distance = 1;
+            HitDistance = 1;
             Debug.DrawRay(sensorPos, direction, Color.green);
         }
     }

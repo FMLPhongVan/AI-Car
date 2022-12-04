@@ -24,7 +24,7 @@ public class Academy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 4f;
+        //Time.timeScale = 4f;
         if (FileName == "")
             species = new GeneticController(NumGens, MutationRate);
         else
