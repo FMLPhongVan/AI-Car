@@ -54,18 +54,16 @@ public class GeneticController
         List<double> tempF = new ();
         for (int i = 0; i < mother.Count; i++)
         {
-            if (i % 2 == 1)
+            if (UnityEngine.Random.Range(0f, 1f) < _crossoverRate)
             {
                 tempM.Add(father[i]);
                 tempF.Add(mother[i]);
             }
             else
-            { 
+            {
                 tempM.Add(mother[i]);
                 tempF.Add(father[i]);
             }
-
-
         }
         mother.RemoveRange(0, mother.Count);
         father.RemoveRange(0, mother.Count);
@@ -79,7 +77,7 @@ public class GeneticController
         List<double> genes = network.Encode();
         for (int i = 0; i < genes.Count; ++i)
         {
-           if (UnityEngine.Random.Range(0f, 1f) < 0.2f)
+           if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
                 genes[i] += UnityEngine.Random.Range(0f, 1f) * 0.2 - 0.1;
         }
 
@@ -103,28 +101,25 @@ public class GeneticController
         PopulationFitness = 0f;
 
         CurrentPopulation.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
-        for (int i = 0; i < CurrentPopulation.Count; ++i)
-        {
-            Debug.Log(CurrentPopulation[i].Fitness + " ");
-        }
-        Console.WriteLine();
-        CurrentPopulation[0].Save();
 
+        // 10% of the population is the best of the previous generation
+        for (int i = 0; i < _populationSize / 10; ++i)
+            NextPopulation.Add(CurrentPopulation[i]);
+
+        // From 50% of the population, we breed the best of the previous generation
         while (NextPopulation.Count < _populationSize)
         {
-            int tmp = Selection();
-            NeuralNetwork dna = new NeuralNetwork(CurrentPopulation[tmp].LayerStructure);
-            dna.Decode(CurrentPopulation[tmp].Encode());
-            if (_crossoverRate > UnityEngine.Random.Range(0f, 1f))
-            {
-                NeuralNetwork[] childs = Breed(CurrentPopulation[tmp], CurrentPopulation[Selection()]);
-                dna = childs[0];
-            }
+            NeuralNetwork[] childs = Breed(CurrentPopulation[UnityEngine.Random.Range(0, _populationSize / 2)], CurrentPopulation[UnityEngine.Random.Range(0, _populationSize / 2)]);
+            if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
+                Mutate(childs[0]);
 
-            if (_mutationRate > UnityEngine.Random.Range(0f, 1f))
-                Mutate(dna);
+            if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
+                Mutate(childs[1]);
 
-            NextPopulation.Add(dna);
+            if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                NextPopulation.Add(childs[0]);
+            else
+                NextPopulation.Add(childs[1]);
         }
 
         for (int i = 0; i < _populationSize; ++i)

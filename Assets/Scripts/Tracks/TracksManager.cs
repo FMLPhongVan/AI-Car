@@ -15,6 +15,7 @@ public class TracksManager : MonoBehaviour
             Tracks.Add(tmp[i]);
 
         CurrentTrack = 0;
+        Tracks[(int)CurrentTrack].transform.position = Vector3.zero;
         TrackName = Tracks[(int)CurrentTrack].name;
         for (int i = 1; i < Tracks.Count; i++)
             Tracks[i].SetActive(false);

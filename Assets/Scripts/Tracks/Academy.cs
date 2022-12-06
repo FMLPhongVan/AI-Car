@@ -96,7 +96,6 @@ public class Academy : MonoBehaviour
         bool stop = true;
         for (int i = 0; i < NumberOfCarsPerGeneration; ++i)
         {
-            Debug.Log(i + " " + _aiControllers[i].Alive + " " + _aiControllers[i].GetLap());
             if (_aiControllers[i] == null || (_aiControllers[i].Alive && _aiControllers[i].GetLap() < 2))
                 stop = false;
         }
