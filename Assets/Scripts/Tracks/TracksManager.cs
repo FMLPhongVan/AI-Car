@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class TracksManager : MonoBehaviour
 {
-    public List<GameObject> Checkpoints;
+    public uint CurrentTrack = 0;
+    public string TrackName = "Unknown";
+    public List<GameObject> Tracks = new ();
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        GameObject obj = GameObject.Find("Checkpoints");
-        foreach (Transform child in obj.transform)
-        {
-            Debug.Log(child.name);
-            Checkpoints.Add(child.gameObject);
-        }
+        GameObject[] tmp = GameObject.FindGameObjectsWithTag("Track");
+        for (int i = 0; i < tmp.Length; i++)
+            Tracks.Add(tmp[i]);
+
+        CurrentTrack = 0;
+        TrackName = Tracks[(int)CurrentTrack].name;
+        for (int i = 1; i < Tracks.Count; i++)
+            Tracks[i].SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public List<GameObject> GetCurrentTrackCheckpoints()
     {
-        
+        return Tracks[(int)CurrentTrack].GetComponent<Track>().Checkpoints;
+    }
+
+    public void NextTrack()
+    {
+        Tracks[(int)CurrentTrack].SetActive(false);
+        CurrentTrack = (CurrentTrack + 1) % (uint)Tracks.Count;
+        Debug.Log("Current track: " + CurrentTrack);
+        Tracks[(int)CurrentTrack].SetActive(true);
+        Tracks[(int)CurrentTrack].transform.position = Vector3.zero;
+        TrackName = Tracks[(int)CurrentTrack].name;
     }
 }

@@ -1,53 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Academy : MonoBehaviour
 {
     public string FileName = "";
-    public int NumGens;
-    public int NumSimulate;
-    public float MutationRate;
-    public Vector3 StartPosition;
-    public GameObject Car;
-    public TracksManager TrackManager;
-    public GeneticController species;
-    public int CurrentGenome;
-    public float BestGenomeFitness = -100000;
-    public int BatchSimulate;
+    public GameObject CarVariant;
+    public int HiddenLayer = 1;
+    public int NumberOfNodePerLayer = 8;
+    public int NumberOfInputNode = 13;
     public int Generation = 1;
+    public int NumberOfCarsPerGeneration = 20;
+    public float MutationRate = 0.05f;
+    public float CrossoverRate = 0.5f;
+    public Vector3 StartPosition;
+    public float BestGenomeFitness = -100000;
     public AIController BestCar;
 
-    GameObject[] _cars;
-    AIController[] _aiControllers;
+    public GeneticController _species;
+    TracksManager _tracksManager;
+    public GameObject[] _cars;
+    public AIController[] _aiControllers;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //Time.timeScale = 4f;
-        if (FileName == "")
-            species = new GeneticController(NumGens, MutationRate);
-        else
-            species = new GeneticController(NumGens, MutationRate, FileName);
-        _cars = new GameObject[NumSimulate];
-        _aiControllers = new AIController[NumSimulate];
-        BestCar = _aiControllers[0];
+        _tracksManager = gameObject.GetComponent<TracksManager>();
 
-        CarCheckpoint checkpoint = Car.GetComponent<CarCheckpoint>();
-        checkpoint.TrackManager = TrackManager;
-        
-        for (int i = 0; i < NumSimulate; i++)
+        Time.timeScale = 2f;
+        if (FileName == "")
+            _species = new GeneticController(HiddenLayer, NumberOfNodePerLayer, NumberOfInputNode, NumberOfCarsPerGeneration, MutationRate, CrossoverRate);
+        else
+            _species = new GeneticController(HiddenLayer, NumberOfNodePerLayer, NumberOfInputNode, NumberOfCarsPerGeneration, MutationRate, CrossoverRate, FileName);
+        //_species = new GeneticController(HiddenLayer, NumberOfNodePerLayer, NumberOfInputNode, NumberOfCarsPerGeneration, MutationRate, CrossoverRate);
+        _cars = new GameObject[NumberOfCarsPerGeneration];
+        _aiControllers = new AIController[NumberOfCarsPerGeneration];
+
+        for (int i = 0; i < NumberOfCarsPerGeneration; i++)
         {
-            //_cars[i] = Instantiate(Car, StartPosition + 2 * i * Vector3.up, Car.transform.rotation);
-            _cars[i] = Instantiate(Car, StartPosition, Car.transform.rotation);
+            _cars[i] = Instantiate(CarVariant, StartPosition, Quaternion.identity);
             _aiControllers[i] = _cars[i].GetComponent<AIController>();
-            _aiControllers[i].network = species.Population[i];
+            _aiControllers[i].Network = _species.CurrentPopulation[i];
         }
 
-        for (int i = 0; i < NumSimulate; ++i)
-        {
-            for (int j = 0; j < NumSimulate; ++j)
-            {
+
+        for (int i = 0; i < NumberOfCarsPerGeneration; ++i)
+            for (int j = 0; j < NumberOfCarsPerGeneration; ++j)
                 if (i != j)
                 {
                     Physics.IgnoreCollision(_cars[i].GetComponentInChildren<BoxCollider>(), _cars[j].GetComponentInChildren<BoxCollider>(), true);
@@ -55,69 +56,61 @@ public class Academy : MonoBehaviour
                     Physics.IgnoreCollision(_cars[i].GetComponentInChildren<WheelCollider>(), _cars[j].GetComponentInChildren<BoxCollider>(), true);
                     Physics.IgnoreCollision(_cars[i].GetComponentInChildren<WheelCollider>(), _cars[j].GetComponentInChildren<WheelCollider>(), true);
                 }
-            }
+    }
+
+    void Start()
+    {
+        BestCar = _aiControllers[0];
+
+        for (int i = 0; i < NumberOfCarsPerGeneration; i++)
+        {
+            _cars[i].GetComponent<CarCheckpoint>().SetTracksManager(_tracksManager);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        float bestCarFitness = -1;
-        bool allCarsDead = true;
-        foreach (AIController car in _aiControllers)
+        for (int i = 0; i < _species.CurrentPopulation.Count; ++i)
         {
-            if (car.Alive)
+            if (_aiControllers[i].Alive && BestGenomeFitness < _aiControllers[i].OverallFitness)
             {
-                allCarsDead = false;
-                if (car.network.Fitness > BestGenomeFitness)
-                {
-                    BestGenomeFitness = car.network.Fitness;
-                    BestCar = car;
-                }
+                BestGenomeFitness = _aiControllers[i].OverallFitness;
+                BestCar = _aiControllers[i];
             }
         }
+        
+        if (MeetStopCondition())
+        {
+            for (int i = 0; i < _aiControllers.Length; ++i) _aiControllers[i].Stop();
+            Debug.Log("Meet stop condition. Start a new generation.");
+            SetUpNewGeneration();
+            Generation++;
+            // Sleep for 2 second before next gen
+            
+        }
+    }
 
-        if (allCarsDead)
-        { 
-            //Debug.Log("All Cars Dead");
-            // If we have simualted all genomes, reset and get next gen
-            if (CurrentGenome == NumGens)
-            {
-                if (BestCar != null && BestCar.network != null)
-                {
-                    species.Population.Add(BestCar.network);
-                    BestCar.network.Save("trackC");
-                }
-                //Debug.Log("New Gen");
-                species.NextGen();
-                for (int i = 0; i < NumSimulate; i++)
-                {
-                    _aiControllers[i].network = species.Population[i];
-                    _aiControllers[i].Reset();
-                }
-                Generation++;
-                CurrentGenome = NumSimulate;
-            }
-            else 
-            {
-                if (CurrentGenome + NumSimulate <= NumGens)
-                {
-                    //Debug.Log("Full Sim");
-                    BatchSimulate = NumSimulate;
-                }
-                else
-                {
-                    //Debug.Log("Partial Sim");
-                    BatchSimulate = NumGens - CurrentGenome;
-                }
+    private bool MeetStopCondition()
+    {
+        bool stop = true;
+        for (int i = 0; i < NumberOfCarsPerGeneration; ++i)
+        {
+            Debug.Log(i + " " + _aiControllers[i].Alive + " " + _aiControllers[i].GetLap());
+            if (_aiControllers[i] == null || (_aiControllers[i].Alive && _aiControllers[i].GetLap() < 2))
+                stop = false;
+        }
+        return stop;
+    }
 
-                for (int i = 0; i < BatchSimulate; i++)
-                {
-                    _aiControllers[i].network = species.Population[CurrentGenome + i];
-                    _aiControllers[i].Reset();
-                }
-                CurrentGenome += BatchSimulate;
-            }
+    private void SetUpNewGeneration()
+    {
+        _tracksManager.NextTrack();
+        _species.NextGeneration();
+        for (int i = 0; i < _cars.Length; ++i)
+        {
+            _aiControllers[i].Reset();
+            _aiControllers[i].Network = _species.CurrentPopulation[i];
         }
     }
 }

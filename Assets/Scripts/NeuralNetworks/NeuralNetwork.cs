@@ -23,7 +23,7 @@ public class NeuralNetwork
 
         for (int i = 0; i < layerStructure.Length; i++)
         {
-            Layer layer = new Layer(i, LayerStructure[i]);
+            Layer layer = new (i, LayerStructure[i]);
             Layers.Add(layer);
 
             for (int j = 0; j < LayerStructure[i]; j++)
@@ -129,11 +129,9 @@ public class NeuralNetwork
                     double sum = 0;
                     for (int k = 0; k < Layers[i - 1].Neurons.Count; ++k)
                         sum += Layers[i - 1].Neurons[k].Value * neuron.Edges[k].Weight;
-                    
-                    if (i != Layers.Count - 1)
-                        neuron.Value = sigmoid(sum + neuron.Bias);
-                    else
-                        neuron.Value = (float)Math.Tanh(sum + neuron.Bias);
+
+                    neuron.Value = activation(sum + neuron.Bias);
+                    if (i == Layers.Count - 1) neuron.Value = 2 * neuron.Value - 1;
                 }
             }
         }
@@ -191,5 +189,10 @@ public class NeuralNetwork
     private double sigmoid(double x)
     {
         return 1 / (1 + Math.Exp(-x));
+    }
+
+    private double activation(double x)
+    {
+        return 1 / (1 + Math.Pow(Math.E, -4 * x));
     }
 }

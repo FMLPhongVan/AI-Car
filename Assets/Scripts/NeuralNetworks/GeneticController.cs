@@ -1,49 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GeneticController
 {
-    public List<NeuralNetwork> Population;
-    public List<NeuralNetwork> NextGeneration;
+    public List<NeuralNetwork> CurrentPopulation;
+    public List<NeuralNetwork> NextPopulation;
     public double PopulationFitness;
-    public float MutationRate;
     public float AverageFitness;
-    private int _populationSize;
+    private readonly int _populationSize;
+    private readonly float _mutationRate;
+    private readonly float _crossoverRate;
 
-    public GeneticController(int populationSize, float mutationRate)
+    public GeneticController(int hiddenLayer, int numberOfNodePerLayer, int numberOfInputNode, int populationSize, float mutationRate, float crossoverRate)
     {
         _populationSize = populationSize;
-        MutationRate = mutationRate;
-        Population = new List<NeuralNetwork>();
+        _mutationRate = mutationRate;
+        _crossoverRate = crossoverRate;
+        CurrentPopulation = new List<NeuralNetwork>();
         PopulationFitness = 0f;
         AverageFitness = 0f;
 
+        int[] layerStructure = new int[hiddenLayer + 2];
+        layerStructure[0] = numberOfInputNode;
+        for (int i = 1; i < hiddenLayer + 1; i++)
+            layerStructure[i] = numberOfNodePerLayer;
+        layerStructure[hiddenLayer + 1] = 2;
+
         for (int i = 0; i < _populationSize; ++i)
-            //Population.Add(new NeuralNetwork("./records/nn87.txt"));
-            Population.Add(new NeuralNetwork(new int[] { 9, 5, 2 }));
+            CurrentPopulation.Add(new NeuralNetwork(layerStructure));
+
+        Debug.Log("Population size: " + CurrentPopulation.Count);
     }
 
-    public GeneticController(int populationSize, float mutationRate, string fileName)
+    public GeneticController(int hiddenLayer, int numberOfNodePerLayer, int numberOfInputNode, int populationSize, float mutationRate, float crossoverRate, string fileName)
     {
         _populationSize = populationSize;
-        MutationRate = mutationRate;
-        Population = new List<NeuralNetwork>();
+        _mutationRate = mutationRate;
+        _crossoverRate = crossoverRate;
+        CurrentPopulation = new List<NeuralNetwork>();
         PopulationFitness = 0f;
         AverageFitness = 0f;
 
         for (int i = 0; i < _populationSize; ++i)
-            Population.Add(new NeuralNetwork("./records/" + fileName + ".txt"));
+            CurrentPopulation.Add(new NeuralNetwork("./records/" + fileName + ".txt"));
         //Population.Add(new NeuralNetwork(new int[] { 9, 5, 2 }));
     }
 
     public void Crossover(List<double> mother, List<double> father)
     {
-        List<double> tempM = new List<double>();
-        List<double> tempF = new List<double>();
+        List<double> tempM = new ();
+        List<double> tempF = new ();
         for (int i = 0; i < mother.Count; i++)
         {
-            if (UnityEngine.Random.Range(0, 1f) > .5)
+            if (i % 2 == 1)
             {
                 tempM.Add(father[i]);
                 tempF.Add(mother[i]);
@@ -68,8 +79,8 @@ public class GeneticController
         List<double> genes = network.Encode();
         for (int i = 0; i < genes.Count; ++i)
         {
-            if (MutationRate > UnityEngine.Random.Range(0f, 1f))
-                genes[i] = UnityEngine.Random.Range(-1f, 1f);
+           if (UnityEngine.Random.Range(0f, 1f) < 0.2f)
+                genes[i] += UnityEngine.Random.Range(0f, 1f) * 0.2 - 0.1;
         }
 
         network.Decode(genes);
@@ -77,62 +88,59 @@ public class GeneticController
 
     public NeuralNetwork[] Breed(NeuralNetwork mother, NeuralNetwork father)
     {
-        NeuralNetwork[] childs = { new NeuralNetwork(mother.LayerStructure), new NeuralNetwork(mother.LayerStructure) };
+        NeuralNetwork[] childs = { new NeuralNetwork(mother.LayerStructure), new NeuralNetwork(father.LayerStructure) };
         List<double> motherGenes = mother.Encode();
         List<double> otherGenes = father.Encode();
+        Crossover(motherGenes, otherGenes);
         childs[0].Decode(motherGenes);
         childs[1].Decode(otherGenes);
         return childs;
     }
 
-    public void NextGen()
+    public void NextGeneration()
     {
-        NextGeneration = new List<NeuralNetwork>();
+        NextPopulation = new List<NeuralNetwork>();
         PopulationFitness = 0f;
 
-        for (int i = 0; i < Population.Count; ++i)
-            PopulationFitness += Population[i].Fitness;
-
-        for (int i = 0; i < Population.Count; ++i)
-            Population[i].FitnessRatio = (float)(Population[i].Fitness / PopulationFitness);
-
-        AverageFitness = (float)(PopulationFitness / Population.Count);
-        Population.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
-        Population[0].Save();
-        NextGeneration.Add(Population[0]);
-
-        for (int i = 0; i < Population.Count / 2; ++i)
+        CurrentPopulation.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
+        for (int i = 0; i < CurrentPopulation.Count; ++i)
         {
-            int firstParentId = -1;
-            int secondParentId = -1;
-            float firstChance = UnityEngine.Random.Range(0f, 1f);
-            float secondChance = UnityEngine.Random.Range(0f, 1f);
-            double range = 0;
-            
-            for (int j = 0; j < Population.Count; ++j)
+            Debug.Log(CurrentPopulation[i].Fitness + " ");
+        }
+        Console.WriteLine();
+        CurrentPopulation[0].Save();
+
+        while (NextPopulation.Count < _populationSize)
+        {
+            int tmp = Selection();
+            NeuralNetwork dna = new NeuralNetwork(CurrentPopulation[tmp].LayerStructure);
+            dna.Decode(CurrentPopulation[tmp].Encode());
+            if (_crossoverRate > UnityEngine.Random.Range(0f, 1f))
             {
-                range += Population[i].FitnessRatio;
-                if (firstChance > range && secondChance > range) continue;
-                if (firstChance <= range && firstParentId == -1)
-                    firstParentId = j;
-
-                if (secondChance <= range && secondParentId == -1)
-                    secondParentId = (firstParentId == j) ? (j + 1) % Population.Count : j;
-
-                if (firstParentId >= 0 && secondParentId >= 0) break;
+                NeuralNetwork[] childs = Breed(CurrentPopulation[tmp], CurrentPopulation[Selection()]);
+                dna = childs[0];
             }
 
-            if (firstParentId == -1) firstParentId = Population.Count - 1;
-            if (secondParentId == -1) secondParentId = Population.Count - 1;
+            if (_mutationRate > UnityEngine.Random.Range(0f, 1f))
+                Mutate(dna);
 
-            NeuralNetwork[] childs = Breed(Population[firstParentId], Population[secondParentId]);
-            Mutate(childs[0]);
-            Mutate(childs[1]);
-            NextGeneration.Add(childs[0]);
-            NextGeneration.Add(childs[1]);
+            NextPopulation.Add(dna);
         }
 
         for (int i = 0; i < _populationSize; ++i)
-            Population[i] = NextGeneration[i];
+            CurrentPopulation[i] = NextPopulation[i];
+    }
+
+    private int Selection()
+    {
+        int[] roundIndex = new int[5];
+        for (int i = 0; i < 5; ++i)
+            roundIndex[i] = UnityEngine.Random.Range(0, _populationSize / 2);
+
+        int minIndex = _populationSize;
+        for (int i = 0; i < 5; ++i)
+            minIndex = Math.Min(minIndex, roundIndex[i]);
+
+        return minIndex;
     }
 }

@@ -8,6 +8,7 @@ public class Layer
 {
     public List<Neuron> Neurons;
     private int _layerId;
+    private Layer layer;
 
     public object LNeurons { get; internal set; }
 
@@ -15,6 +16,11 @@ public class Layer
     {
         Neurons = new List<Neuron>(neuronCount);
         _layerId = layerId;
+    }
+
+    public Layer(Layer layer)
+    {
+        this.layer = layer;
     }
 
     public double[,] GetWeights(NeuralNetwork network)

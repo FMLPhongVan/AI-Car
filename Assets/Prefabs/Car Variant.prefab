@@ -843,7 +843,7 @@ MonoBehaviour:
   frontRightWheeTransform: {fileID: 216525589785510048}
   rearLeftWheelTransform: {fileID: 8191121322450586044}
   rearRightWheelTransform: {fileID: 1030642983543891615}
---- !u!114 &4656644430162192021
+--- !u!114 &5016959143785226875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -855,19 +855,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22942f7a3b3b4fe43bde2bf715916545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  network:
+  Network:
     Layers: []
     LayerStructure: 
     Fitness: 0
     FitnessRatio: 0
-  CarController: {fileID: 7925622141647910332}
   TravelDistance: 0
   AverageSpeed: 0
   TimeElapsed: 0
   BestFitness: 0
   BestPopulationFitness: 0
   OverallFitness: 0
-  DistanceMultiplier: 2
+  DistanceMultiplier: 1
   SpeedMultiplier: 0
   SensorMultiplier: 0
   Alive: 1
@@ -885,9 +884,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bbef19741b1184ca031a07d61062b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Car: {fileID: 2583955484008804000}
-  ai: {fileID: 0}
-  _carRigidBody: {fileID: 0}
   Sensors:
   - {fileID: 7940673436452173692}
   - {fileID: 5932667150685783887}
@@ -897,17 +893,17 @@ MonoBehaviour:
   - {fileID: 435834847022700559}
   - {fileID: 4819836965535762388}
   - {fileID: 6566934414597252353}
-  CarCheckpoint: {fileID: 8205302284101232938}
+  - {fileID: 8661863392793429437}
+  - {fileID: 5408367518480039960}
+  - {fileID: 4707254826524259703}
+  - {fileID: 2447831386914103600}
   Speed: 0
   PlayerStopped: 0
   PlayerHitWall: 0
-  HitCheckPoint: 0
   TimerStarted: 0
   ForceInput: 0
   SteeringAngle: 0
   IsBraking: 0
-  _motorForce: 5000
-  _brakeForce: 3000
   MaxSteeringAngle: 50
   _frontLeftWheelCollider: {fileID: 3142074818705276084}
   _frontRightWheelCollider: {fileID: 5523254361789673043}
@@ -929,11 +925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8d9ad5d6cdaa242a5740ed7e52b222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarController: {fileID: 7925622141647910332}
-  TrackManager: {fileID: 0}
-  Checkpoints: []
-  NextCheckPoint: 0
   CurrentLap: 0
+  NextCheckPoint: 0
   DistanceToNextCheckpoint: 0
 --- !u!146 &2706134321498606022 stripped
 WheelCollider:

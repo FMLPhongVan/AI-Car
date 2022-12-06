@@ -7,6 +7,7 @@ TagManager:
   - Checkpoint
   - Path
   - Wall
+  - Track
   layers:
   - Default
   - TransparentFX
