@@ -30,8 +30,6 @@ public class GeneticController
 
         for (int i = 0; i < _populationSize; ++i)
             CurrentPopulation.Add(new NeuralNetwork(layerStructure));
-
-        Debug.Log("Population size: " + CurrentPopulation.Count);
     }
 
     public GeneticController(int hiddenLayer, int numberOfNodePerLayer, int numberOfInputNode, int populationSize, float mutationRate, float crossoverRate, string fileName)

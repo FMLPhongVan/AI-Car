@@ -146,7 +146,7 @@ public class NeuralNetwork
 
     public void Save()
     {
-        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + (int)Fitness + ".txt", true);
+        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + Fitness + ".txt", true);
 
         for (int i = 0; i < LayerStructure.Length - 1; ++i)
             write.Write(LayerStructure[i] + ", ");

@@ -61,6 +61,9 @@ public class AIController : MonoBehaviour
             _timer = 5f;
         }
 
+        if (System.Math.Abs(gameObject.transform.rotation.x) > 8 || System.Math.Abs(gameObject.transform.rotation.z) > 8)
+            Stop();
+
         if (_carController.PlayerHitWall) Stop();
         if (_carController.PlayerStopped) Stop();
     }
