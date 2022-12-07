@@ -17,6 +17,10 @@ public class CarSensors : MonoBehaviour
         Vector3 sensorPos = BodyPoint.transform.position;
         if (hitInfo.collider != null)
         {
+            Debug.Log(hitInfo.collider.tag);
+        }
+        if (hitInfo.collider != null && !hitInfo.collider.gameObject.CompareTag("Path"))
+        {
             Debug.Log(hitInfo.collider.gameObject.name);
             HitDistance = hitInfo.distance / direction.magnitude;
             //Debug.DrawRay(sensorPos, direction, Color.red);
