@@ -145,7 +145,6 @@ public class NeuralNetwork
         outputs[0] = activation(outputs[0]);
         outputs[1] = Math.Tanh(2 * outputs[1]);
         outputs[2] = activation(outputs[2]);
-        Debug.Log("Output: " + outputs[0] + ", " + outputs[1] + ", " + outputs[2]);
         return outputs;
     }
 

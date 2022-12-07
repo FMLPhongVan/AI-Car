@@ -1006,37 +1006,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1653267260147042584, guid: 9c36f68076723ac43bda20ead1d91a9e, type: 3}
   m_PrefabInstance: {fileID: 98424008}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &110450663
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 110450664}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &110450664
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110450663}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -226.5, y: 0, z: -61.02}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &111581503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3551,7 +3520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &569320137
 Transform:
   m_ObjectHideFlags: 0
@@ -3594,13 +3563,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5700682898a48438966a48a2c5514d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FileName: nn1245
+  FileName: 
   CarVariant: {fileID: 2583955484008804000, guid: fa08f68525c078146b8a8b0b36b7dc7d, type: 3}
   HiddenLayer: 1
   NumberOfNodePerLayer: 9
   NumberOfInputNode: 10
   Generation: 1
-  NumberOfCarsPerGeneration: 1
+  NumberOfCarsPerGeneration: 50
   MutationRate: 0.2
   CrossoverRate: 0.5
   StartPosition: {x: 0, y: 0, z: 0}
@@ -5535,6 +5504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e35e1dce13ac6c4fa3bbf4fd561d27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Academy: {fileID: 569320139}
   offset: {x: 0, y: 4, z: -7}
   target: {fileID: 0}
   translateSpeed: 6
@@ -5803,7 +5773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &998071867
 MonoBehaviour:
   m_ObjectHideFlags: 0
