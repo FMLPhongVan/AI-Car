@@ -26,15 +26,16 @@ public class CarController : MonoBehaviour
     float _timeLeft = 0;
 
     public float ForceInput;
-    public float SteeringAngle;
+    public float TargetSteeringAngle;
     public bool IsBraking = false;
     
     private float _currentSteerAngle;
     private float _currentBrakeForce;
     
-    private const float _motorForce = 5000;
-    private const float _brakeForce = 3000;
-    public float MaxSteeringAngle = 50f;
+    [SerializeField] private float _motorForce = 5000;
+    [SerializeField] private float _brakeForce = 3000;
+    [SerializeField] public float MaxSteeringAngle = 50f;
+    private float _maxSteerAnglePerDeltaTime;
 
     [SerializeField] private WheelCollider _frontLeftWheelCollider;
     [SerializeField] private WheelCollider _frontRightWheelCollider;
@@ -69,7 +70,7 @@ public class CarController : MonoBehaviour
         if (!_ai.Alive) return;
         _carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
         Speed = _carRigidBody.velocity.magnitude;
-        if (Speed < 0.05f)
+        if (Speed < 0.1f)
         {
             if (TimerStarted)
             {
@@ -86,14 +87,14 @@ public class CarController : MonoBehaviour
         
         HandleMotor();
         UpdateAllWheel();
-        _carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
-        gameObject.transform.position.Set(gameObject.transform.position.x, 0, gameObject.transform.position.z);
+        //_carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
+        //gameObject.transform.position.Set(gameObject.transform.position.x, 0, gameObject.transform.position.z);
     }
 
     private void HandleMotor()
     {
-        _frontLeftWheelCollider.motorTorque = ForceInput * _motorForce;
-        _frontRightWheelCollider.motorTorque = ForceInput * _motorForce;
+        _rearLeftWheelCollider.motorTorque = ForceInput * _motorForce;
+        _rearRightWheelCollider.motorTorque = ForceInput * _motorForce;
         _currentBrakeForce = IsBraking ? _brakeForce : 0f;
 
         _frontLeftWheelCollider.brakeTorque = _currentBrakeForce;
@@ -101,7 +102,20 @@ public class CarController : MonoBehaviour
         _rearLeftWheelCollider.brakeTorque = _currentBrakeForce;
         _rearRightWheelCollider.brakeTorque = _currentBrakeForce;
 
-        _currentSteerAngle = MaxSteeringAngle * SteeringAngle;
+
+        _maxSteerAnglePerDeltaTime = 0.05f / Time.deltaTime;
+        if (TargetSteeringAngle * MaxSteeringAngle > _currentSteerAngle)
+        {
+            _currentSteerAngle += _maxSteerAnglePerDeltaTime;
+            if (TargetSteeringAngle * MaxSteeringAngle < _currentSteerAngle)
+                _currentSteerAngle = TargetSteeringAngle * MaxSteeringAngle;
+        }
+        else if (TargetSteeringAngle * MaxSteeringAngle < _currentSteerAngle)
+        {
+            _currentSteerAngle -= _maxSteerAnglePerDeltaTime;
+            if (TargetSteeringAngle * MaxSteeringAngle > _currentSteerAngle)
+                _currentSteerAngle = TargetSteeringAngle * MaxSteeringAngle;
+        }
         _frontLeftWheelCollider.steerAngle = _currentSteerAngle;
         _frontRightWheelCollider.steerAngle = _currentSteerAngle;
     }
@@ -147,14 +161,17 @@ public class CarController : MonoBehaviour
         _carRigidBody.velocity = Vector3.zero;
         _carRigidBody.position = _startPostion;
         _carRigidBody.isKinematic = false;
+        gameObject.transform.position = _startPostion;
         gameObject.transform.rotation = _carRotation;
         
         _currentBrakeForce = 0f;
         _currentSteerAngle = 0f;
 
         ForceInput = 0;
-        SteeringAngle = 0;
+        TargetSteeringAngle = 0;
         HandleMotor();
+        _frontLeftWheelCollider.steerAngle = 0;
+        _frontRightWheelCollider.steerAngle = 0;
         UpdateAllWheel();
 
         _timeLeft = 0;

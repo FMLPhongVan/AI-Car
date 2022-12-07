@@ -12,6 +12,7 @@ public class GeneticController
     private readonly int _populationSize;
     private readonly float _mutationRate;
     private readonly float _crossoverRate;
+    private readonly int _outputs = 3;
 
     public GeneticController(int hiddenLayer, int numberOfNodePerLayer, int numberOfInputNode, int populationSize, float mutationRate, float crossoverRate)
     {
@@ -26,12 +27,10 @@ public class GeneticController
         layerStructure[0] = numberOfInputNode;
         for (int i = 1; i < hiddenLayer + 1; i++)
             layerStructure[i] = numberOfNodePerLayer;
-        layerStructure[hiddenLayer + 1] = 2;
+        layerStructure[hiddenLayer + 1] = _outputs;
 
         for (int i = 0; i < _populationSize; ++i)
             CurrentPopulation.Add(new NeuralNetwork(layerStructure));
-
-        Debug.Log("Population size: " + CurrentPopulation.Count);
     }
 
     public GeneticController(int hiddenLayer, int numberOfNodePerLayer, int numberOfInputNode, int populationSize, float mutationRate, float crossoverRate, string fileName)
@@ -78,7 +77,7 @@ public class GeneticController
         for (int i = 0; i < genes.Count; ++i)
         {
            if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
-                genes[i] += UnityEngine.Random.Range(0f, 1f) * 0.2 - 0.1;
+                genes[i] = UnityEngine.Random.Range(-1f, 1f);
         }
 
         network.Decode(genes);
@@ -100,26 +99,53 @@ public class GeneticController
         NextPopulation = new List<NeuralNetwork>();
         PopulationFitness = 0f;
 
-        CurrentPopulation.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
+        for (int i = 0; i < CurrentPopulation.Count; ++i)
+            PopulationFitness += CurrentPopulation[i].Fitness < 0 ? 0 : CurrentPopulation[i].Fitness;
 
-        // 10% of the population is the best of the previous generation
-        for (int i = 0; i < _populationSize / 10; ++i)
-            NextPopulation.Add(CurrentPopulation[i]);
-
-        // From 50% of the population, we breed the best of the previous generation
-        while (NextPopulation.Count < _populationSize)
+        if (PopulationFitness == 0f) PopulationFitness = 1f;
+        for (int i = 0; i < _populationSize; ++i)
         {
-            NeuralNetwork[] childs = Breed(CurrentPopulation[UnityEngine.Random.Range(0, _populationSize / 2)], CurrentPopulation[UnityEngine.Random.Range(0, _populationSize / 2)]);
-            if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
-                Mutate(childs[0]);
+            CurrentPopulation[i].FitnessRatio = CurrentPopulation[i].Fitness < 0 ? 0 : CurrentPopulation[i].Fitness / PopulationFitness;
+        }
 
-            if (UnityEngine.Random.Range(0f, 1f) < _mutationRate)
-                Mutate(childs[1]);
+        CurrentPopulation.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
+        for (int i = 0; i < _populationSize; ++i) Debug.Log(i + " " + CurrentPopulation[i].Fitness);
+        CurrentPopulation[0].Save();
 
-            if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
-                NextPopulation.Add(childs[0]);
-            else
-                NextPopulation.Add(childs[1]);
+        AverageFitness = (float)PopulationFitness / CurrentPopulation.Count;
+        NextPopulation.Add(CurrentPopulation[0]);
+        
+        for (int i = 0; i < _populationSize / 2; ++i)
+        {
+            int motherIndex = -1;
+            int fatherIndex = -1;
+            double chance1 = UnityEngine.Random.Range(0f, 100f) / 100;
+            double chance2 = UnityEngine.Random.Range(0f, 100f) / 100;
+            double range = 0;
+            
+            for (int j = 0; j < _populationSize; ++j)
+            {
+                range += CurrentPopulation[i].FitnessRatio;
+                if (chance1 > range && chance2 > range) continue;
+                if (chance1 <= range && motherIndex == -1)
+                    motherIndex = j;
+                if (chance2 <= range && fatherIndex == -1)
+                {
+                    if (motherIndex == j) fatherIndex = (j + 1) % _populationSize;
+                    else fatherIndex = j;
+                }
+
+                if (motherIndex != -1 && fatherIndex != -1) break;
+            }
+
+            if (motherIndex == -1) motherIndex = _populationSize - 1;
+            if (fatherIndex == -1) fatherIndex = _populationSize - 1;
+
+            NeuralNetwork[] childs = Breed(CurrentPopulation[motherIndex], CurrentPopulation[fatherIndex]);
+            Mutate(childs[0]);
+            Mutate(childs[1]);
+            NextPopulation.Add(childs[0]);
+            NextPopulation.Add(childs[1]);
         }
 
         for (int i = 0; i < _populationSize; ++i)

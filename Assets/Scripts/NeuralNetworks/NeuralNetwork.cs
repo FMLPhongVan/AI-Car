@@ -130,8 +130,7 @@ public class NeuralNetwork
                     for (int k = 0; k < Layers[i - 1].Neurons.Count; ++k)
                         sum += Layers[i - 1].Neurons[k].Value * neuron.Edges[k].Weight;
 
-                    neuron.Value = activation(sum + neuron.Bias);
-                    if (i == Layers.Count - 1) neuron.Value = 2 * neuron.Value - 1;
+                    neuron.Value = 2 * activation(sum + neuron.Bias) - 1;
                 }
             }
         }
@@ -141,12 +140,18 @@ public class NeuralNetwork
         double[] outputs = new double[num];
         for (int i = 0; i < num; ++i)
             outputs[i] = lastLayer.Neurons[i].Value;
+
+
+        outputs[0] = activation(outputs[0]);
+        outputs[1] = Math.Tanh(2 * outputs[1]);
+        outputs[2] = activation(outputs[2]);
+        Debug.Log("Output: " + outputs[0] + ", " + outputs[1] + ", " + outputs[2]);
         return outputs;
     }
 
     public void Save()
     {
-        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + (int)Fitness + ".txt", true);
+        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + Fitness + ".txt", true);
 
         for (int i = 0; i < LayerStructure.Length - 1; ++i)
             write.Write(LayerStructure[i] + ", ");
