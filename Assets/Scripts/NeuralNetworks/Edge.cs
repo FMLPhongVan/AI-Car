@@ -5,6 +5,6 @@ public class Edge
     public double Weight = 0;
     public Edge()
     {
-        Weight = UnityEngine.Random.Range(-0.5f, 0.5f);
+        Weight = UnityEngine.Random.Range(-1f, 1f);
     }
 }
