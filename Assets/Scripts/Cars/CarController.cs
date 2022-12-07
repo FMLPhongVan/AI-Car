@@ -103,7 +103,7 @@ public class CarController : MonoBehaviour
         _rearRightWheelCollider.brakeTorque = _currentBrakeForce;
 
 
-        _maxSteerAnglePerDeltaTime = 0.05f / Time.deltaTime;
+        _maxSteerAnglePerDeltaTime = 0.03f / Time.deltaTime;
         if (TargetSteeringAngle * MaxSteeringAngle > _currentSteerAngle)
         {
             _currentSteerAngle += _maxSteerAnglePerDeltaTime;
