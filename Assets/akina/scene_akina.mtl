@@ -1,0 +1,674 @@
+newmtl h_df1_sky_rain_pic
+map_Kd h_df1_sky_rain.dds
+
+newmtl h_df1_sky_rain_r_pic
+map_Kd h_df1_sky_rain_r.dds
+
+newmtl k_df1_bh_pic
+map_Kd k_df1_bh.dds
+
+newmtl k_df1_car_ban_a_pic
+map_Kd k_df1_car_ban_a.dds
+
+newmtl k_df1_car_bus_pic
+map_Kd k_df1_car_bus.dds
+
+newmtl k_df1_car_cedan_a_pic
+map_Kd k_df1_car_cedan_a.dds
+
+newmtl k_df1_car_keitora_a_pic
+map_Kd k_df1_car_keitora_a.dds
+
+newmtl k_df1_car_track_l_pic
+map_Kd k_df1_car_track_l.dds
+
+newmtl k_df1_car_track_s_pic
+map_Kd k_df1_car_track_s.dds
+
+newmtl k_df1_car_wagon_a_pic
+map_Kd k_df1_car_wagon_a.dds
+
+newmtl k_df1_car_wagon_b_pic
+map_Kd k_df1_car_wagon_b.dds
+
+newmtl k_df1_car_wagon_c_pic
+map_Kd k_df1_car_wagon_c.dds
+
+newmtl k_df1_car_wagon_d_pic
+map_Kd k_df1_car_wagon_d.dds
+
+newmtl k_df1_cm_chui_pic
+map_Kd k_df1_cm_chui.dds
+
+newmtl k_df1_cm_millor_pic
+map_Kd k_df1_cm_millor.dds
+
+newmtl k_df1_cm_pole_pic
+map_Kd k_df1_cm_pole.dds
+
+newmtl k_df1_forest_c_b_pic
+map_Kd k_df1_forest_c_b.dds
+
+newmtl k_df1_forest_c_f_pic
+map_Kd k_df1_forest_c_f.dds
+
+newmtl k_df1_forest_c_l_pic
+map_Kd k_df1_forest_c_l.dds
+
+newmtl k_df1_forest_c_r_pic
+map_Kd k_df1_forest_c_r.dds
+
+newmtl k_df1_forest_c_t_pic
+map_Kd k_df1_forest_c_t.dds
+
+newmtl k_df1_forest_f_pic
+map_Kd k_df1_forest_f.dds
+
+newmtl k_df1_forest_f_b_pic
+map_Kd k_df1_forest_f_b.dds
+
+newmtl k_df1_forest_l_pic
+map_Kd k_df1_forest_l.dds
+
+newmtl k_df1_forest_r_pic
+map_Kd k_df1_forest_r.dds
+
+newmtl k_df1_forest_t_pic
+map_Kd k_df1_forest_t.dds
+
+newmtl k_df1_forest_t_b_pic
+map_Kd k_df1_forest_t_b.dds
+
+newmtl k_df1_grail_a_pic
+map_Kd k_df1_grail_a.dds
+
+newmtl k_df1_grail_pole_pic
+map_Kd k_df1_grail_pole.dds
+
+newmtl k_df1_grail_pole_cap_pic
+map_Kd k_df1_grail_pole_cap.dds
+
+newmtl k_df1_grail_side_pic
+map_Kd k_df1_grail_side.dds
+
+newmtl k_df1_grass_a_pic
+map_Kd k_df1_grass_a.dds
+
+newmtl k_df1_line_perf_w_a_pic
+map_Kd k_df1_line_perf_w_a.dds
+
+newmtl k_df1_line_w_a_pic
+map_Kd k_df1_line_w_a.dds
+
+newmtl k_df1_line_w_arc_a_pic
+map_Kd k_df1_line_w_arc_a.dds
+
+newmtl k_df1_line_w_arc_b_pic
+map_Kd k_df1_line_w_arc_b.dds
+
+newmtl k_df1_line_y_a_pic
+map_Kd k_df1_line_y_a.dds
+
+newmtl k_df1_line_y_arc_a_pic
+map_Kd k_df1_line_y_arc_a.dds
+
+newmtl k_df1_line_y_arc_b_pic
+map_Kd k_df1_line_y_arc_b.dds
+
+newmtl k_df1_mark0_pic
+map_Kd k_df1_mark0.dds
+
+newmtl k_df1_mark3_pic
+map_Kd k_df1_mark3.dds
+
+newmtl k_df1_mark4_pic
+map_Kd k_df1_mark4.dds
+
+newmtl k_df1_mark_arw_pic
+map_Kd k_df1_mark_arw.dds
+
+newmtl k_df1_mark_curve_pic
+map_Kd k_df1_mark_curve.dds
+
+newmtl k_df1_mark_curve_arw_pic
+map_Kd k_df1_mark_curve_arw.dds
+
+newmtl k_df1_mark_diamond_pic
+map_Kd k_df1_mark_diamond.dds
+
+newmtl k_df1_mark_nu_pic
+map_Kd k_df1_mark_nu.dds
+
+newmtl k_df1_mountain_pic
+map_Kd k_df1_mountain.dds
+
+newmtl k_df1_mountain_r_pic
+map_Kd k_df1_mountain_r.dds
+
+newmtl k_df1_museum_wall_a_pic
+map_Kd k_df1_museum_wall_a.dds
+
+newmtl k_df1_pa_build_a_pic
+map_Kd k_df1_pa_build_a.dds
+
+newmtl k_df1_pa_build_b_wall_pic
+map_Kd k_df1_pa_build_b_wall.dds
+
+newmtl k_df1_pa_build_win_a_pic
+map_Kd k_df1_pa_build_win_a.dds
+
+newmtl k_df1_pa_build_win_b_pic
+map_Kd k_df1_pa_build_win_b.dds
+
+newmtl k_df1_pa_rail_chain_pic
+map_Kd k_df1_pa_rail_chain.dds
+
+newmtl k_df1_pa_tank_pic
+map_Kd k_df1_pa_tank.dds
+
+newmtl k_df1_pa_tower_pic
+map_Kd k_df1_pa_tower.dds
+
+newmtl k_df1_pa_tower_rail_pic
+map_Kd k_df1_pa_tower_rail.dds
+
+newmtl k_df1_pb_plate_pic
+map_Kd k_df1_pb_plate.dds
+
+newmtl k_df1_plant_a_pic
+map_Kd k_df1_plant_a.dds
+
+newmtl k_df1_pole_ref_s_pic
+map_Kd k_df1_pole_ref_s.dds
+
+newmtl k_df1_pole_ref_y_pic
+map_Kd k_df1_pole_ref_y.dds
+
+newmtl k_df1_pub_telbox_a_pic
+map_Kd k_df1_pub_telbox_a.dds
+
+newmtl k_df1_pub_telbox_b_pic
+map_Kd k_df1_pub_telbox_b.dds
+
+newmtl k_df1_pub_telbox_btm_pic
+map_Kd k_df1_pub_telbox_btm.dds
+
+newmtl k_df1_pub_telbox_tel_pic
+map_Kd k_df1_pub_telbox_tel.dds
+
+newmtl k_df1_pz_build_a_pic
+map_Kd k_df1_pz_build_a.dds
+
+newmtl k_df1_pz_build_c_pic
+map_Kd k_df1_pz_build_c.dds
+
+newmtl k_df1_pz_build_d_pic
+map_Kd k_df1_pz_build_d.dds
+
+newmtl k_df1_pz_build_e_pic
+map_Kd k_df1_pz_build_e.dds
+
+newmtl k_df1_pz_build_f_pic
+map_Kd k_df1_pz_build_f.dds
+
+newmtl k_df1_rail_net_pic
+map_Kd k_df1_rail_net.dds
+
+newmtl k_df1_rail_pole_pic
+map_Kd k_df1_rail_pole.dds
+
+newmtl k_df1_red_house_roof_pic
+map_Kd k_df1_red_house_roof.dds
+
+newmtl k_df1_road_a_pic
+map_Kd k_df1_road_a.dds
+
+newmtl k_df1_road_b_pic
+map_Kd k_df1_road_b.dds
+
+newmtl k_df1_road_bump_pic
+map_Kd k_df1_road_bump.dds
+
+newmtl k_df1_road_redline_pic
+map_Kd k_df1_road_redline.dds
+
+newmtl k_df1_road_side_a_pic
+map_Kd k_df1_road_side_a.dds
+
+newmtl k_df1_sign_abunai_pic
+map_Kd k_df1_sign_abunai.dds
+
+newmtl k_df1_sign_arrow_wr_pic
+map_Kd k_df1_sign_arrow_wr.dds
+
+newmtl k_df1_sign_arrow_yr_pic
+map_Kd k_df1_sign_arrow_yr.dds
+
+newmtl k_df1_sign_dekoboko_pic
+map_Kd k_df1_sign_dekoboko.dds
+
+newmtl k_df1_sign_disk_arw_b_pic
+map_Kd k_df1_sign_disk_arw_b.dds
+
+newmtl k_df1_sign_disk_arw_c_pic
+map_Kd k_df1_sign_disk_arw_c.dds
+
+newmtl k_df1_sign_d_arw_pic
+map_Kd k_df1_sign_d_arw.dds
+
+newmtl k_df1_sign_d_arw_bh_pic
+map_Kd k_df1_sign_d_arw_bh.dds
+
+newmtl k_df1_sign_d_bh_pic
+map_Kd k_df1_sign_d_bh.dds
+
+newmtl k_df1_sign_d_nu_pic
+map_Kd k_df1_sign_d_nu.dds
+
+newmtl k_df1_sign_d_over_pic
+map_Kd k_df1_sign_d_over.dds
+
+newmtl k_df1_sign_d_s30_pic
+map_Kd k_df1_sign_d_s30.dds
+
+newmtl k_df1_sign_d_s40_pic
+map_Kd k_df1_sign_d_s40.dds
+
+newmtl k_df1_sign_d_term_pic
+map_Kd k_df1_sign_d_term.dds
+
+newmtl k_df1_sign_d_ua_pic
+map_Kd k_df1_sign_d_ua.dds
+
+newmtl k_df1_sign_d_ub_pic
+map_Kd k_df1_sign_d_ub.dds
+
+newmtl k_df1_sign_gate_skate_pic
+map_Kd k_df1_sign_gate_skate.dds
+
+newmtl k_df1_sign_heapin_pic
+map_Kd k_df1_sign_heapin.dds
+
+newmtl k_df1_sign_heliport_pic
+map_Kd k_df1_sign_heliport.dds
+
+newmtl k_df1_sign_h_kendo_pic
+map_Kd k_df1_sign_h_kendo.dds
+
+newmtl k_df1_sign_h_kendo_bh_pic
+map_Kd k_df1_sign_h_kendo_bh.dds
+
+newmtl k_df1_sign_h_kendo_p_pic
+map_Kd k_df1_sign_h_kendo_p.dds
+
+newmtl k_df1_sign_ikisaki_a_pic
+map_Kd k_df1_sign_ikisaki_a.dds
+
+newmtl k_df1_sign_jokou_pic
+map_Kd k_df1_sign_jokou.dds
+
+newmtl k_df1_sign_junc_skate_pic
+map_Kd k_df1_sign_junc_skate.dds
+
+newmtl k_df1_sign_kangei_pic
+map_Kd k_df1_sign_kangei.dds
+
+newmtl k_df1_sign_kendo_pic
+map_Kd k_df1_sign_kendo.dds
+
+newmtl k_df1_sign_koreyori_pic
+map_Kd k_df1_sign_koreyori.dds
+
+newmtl k_df1_sign_kyuu_pic
+map_Kd k_df1_sign_kyuu.dds
+
+newmtl k_df1_sign_nagamine_pic
+map_Kd k_df1_sign_nagamine.dds
+
+newmtl k_df1_sign_panel_rear_pic
+map_Kd k_df1_sign_panel_rear.dds
+
+newmtl k_df1_sign_park_b_pic
+map_Kd k_df1_sign_park_b.dds
+
+newmtl k_df1_sign_pk_kanban_pic
+map_Kd k_df1_sign_pk_kanban.dds
+
+newmtl k_df1_sign_pk_onsen_pic
+map_Kd k_df1_sign_pk_onsen.dds
+
+newmtl k_df1_sign_pole_jnt_pic
+map_Kd k_df1_sign_pole_jnt.dds
+
+newmtl k_df1_sign_pole_rw_pic
+map_Kd k_df1_sign_pole_rw.dds
+
+newmtl k_df1_sign_p_hokou_pic
+map_Kd k_df1_sign_p_hokou.dds
+
+newmtl k_df1_sign_q_bh_pic
+map_Kd k_df1_sign_q_bh.dds
+
+newmtl k_df1_sign_q_cva_pic
+map_Kd k_df1_sign_q_cva.dds
+
+newmtl k_df1_sign_q_junc_pic
+map_Kd k_df1_sign_q_junc.dds
+
+newmtl k_df1_sign_q_sa_pic
+map_Kd k_df1_sign_q_sa.dds
+
+newmtl k_df1_sign_q_sb_pic
+map_Kd k_df1_sign_q_sb.dds
+
+newmtl k_df1_sign_q_slip_pic
+map_Kd k_df1_sign_q_slip.dds
+
+newmtl k_df1_sign_q_syasen_pic
+map_Kd k_df1_sign_q_syasen.dds
+
+newmtl k_df1_sign_skate_a_pic
+map_Kd k_df1_sign_skate_a.dds
+
+newmtl k_df1_sign_skate_b_pic
+map_Kd k_df1_sign_skate_b.dds
+
+newmtl k_df1_sign_skate_c_pic
+map_Kd k_df1_sign_skate_c.dds
+
+newmtl k_df1_sign_slip_pic
+map_Kd k_df1_sign_slip.dds
+
+newmtl k_df1_sign_stop_pic
+map_Kd k_df1_sign_stop.dds
+
+newmtl k_df1_sign_stop_pole_pic
+map_Kd k_df1_sign_stop_pole.dds
+
+newmtl k_df1_sign_stop_pole_b_pic
+map_Kd k_df1_sign_stop_pole_b.dds
+
+newmtl k_df1_sign_toban_pic
+map_Kd k_df1_sign_toban.dds
+
+newmtl k_df1_sign_t_stop_pic
+map_Kd k_df1_sign_t_stop.dds
+
+newmtl k_df1_sign_ukai_pic
+map_Kd k_df1_sign_ukai.dds
+
+newmtl k_df1_sign_wh_lg_pic
+map_Kd k_df1_sign_wh_lg.dds
+
+newmtl k_df1_sky_pic
+map_Kd k_df1_sky.dds
+
+newmtl k_df1_sky_r_pic
+map_Kd k_df1_sky_r.dds
+
+newmtl k_df1_slit_a_pic
+map_Kd k_df1_slit_a.dds
+
+newmtl k_df1_slit_a_r_pic
+map_Kd k_df1_slit_a_r.dds
+
+newmtl k_df1_slit_c_pic
+map_Kd k_df1_slit_c.dds
+
+newmtl k_df1_slit_c_r_pic
+map_Kd k_df1_slit_c_r.dds
+
+newmtl k_df1_slit_type1_pic
+map_Kd k_df1_slit_type1.dds
+
+newmtl k_df1_slit_type1_r_pic
+map_Kd k_df1_slit_type1_r.dds
+
+newmtl k_df1_slit_type2_pic
+map_Kd k_df1_slit_type2.dds
+
+newmtl k_df1_slit_type2_r_pic
+map_Kd k_df1_slit_type2_r.dds
+
+newmtl k_df1_slit_type3_pic
+map_Kd k_df1_slit_type3.dds
+
+newmtl k_df1_slit_type3_r_pic
+map_Kd k_df1_slit_type3_r.dds
+
+newmtl k_df1_slit_type4_pic
+map_Kd k_df1_slit_type4.dds
+
+newmtl k_df1_slit_type5_pic
+map_Kd k_df1_slit_type5.dds
+
+newmtl k_df1_slope_b_pic
+map_Kd k_df1_slope_b.dds
+
+newmtl k_df1_slope_b_r_pic
+map_Kd k_df1_slope_b_r.dds
+
+newmtl k_df1_slope_pb_pic
+map_Kd k_df1_slope_pb.dds
+
+newmtl k_df1_slope_pb_hole_pic
+map_Kd k_df1_slope_pb_hole.dds
+
+newmtl k_df1_slope_pb_r_pic
+map_Kd k_df1_slope_pb_r.dds
+
+newmtl k_df1_slope_rock_a_pic
+map_Kd k_df1_slope_rock_a.dds
+
+newmtl k_df1_slope_rock_a_r_pic
+map_Kd k_df1_slope_rock_a_r.dds
+
+newmtl k_df1_slope_rock_b_pic
+map_Kd k_df1_slope_rock_b.dds
+
+newmtl k_df1_slope_rock_b_r_pic
+map_Kd k_df1_slope_rock_b_r.dds
+
+newmtl k_df1_sponsor_honda_pic
+map_Kd k_df1_sponsor_honda.dds
+
+newmtl k_df1_sponsor_mazda_pic
+map_Kd k_df1_sponsor_mazda.dds
+
+newmtl k_df1_sponsor_mitsu_pic
+map_Kd k_df1_sponsor_mitsu.dds
+
+newmtl k_df1_sponsor_nissan_pic
+map_Kd k_df1_sponsor_nissan.dds
+
+newmtl k_df1_sponsor_subaru_pic
+map_Kd k_df1_sponsor_subaru.dds
+
+newmtl k_df1_sponsor_toyota_pic
+map_Kd k_df1_sponsor_toyota.dds
+
+newmtl k_df1_spo_rear_pic
+map_Kd k_df1_spo_rear.dds
+
+newmtl k_df1_st_light_pic
+map_Kd k_df1_st_light.dds
+
+newmtl k_df1_st_light_pole_pic
+map_Kd k_df1_st_light_pole.dds
+
+newmtl k_df1_sun_pic
+map_Kd k_df1_sun.dds
+
+newmtl k_df1_super_road_pic
+map_Kd k_df1_super_road.dds
+
+newmtl k_df1_telepole_a_pic
+map_Kd k_df1_telepole_a.dds
+
+newmtl k_df1_telepole_b_pic
+map_Kd k_df1_telepole_b.dds
+
+newmtl k_df1_telepole_wire_pic
+map_Kd k_df1_telepole_wire.dds
+
+newmtl k_df1_tree_la_pic
+map_Kd k_df1_tree_la.dds
+
+newmtl k_df1_tree_lb_pic
+map_Kd k_df1_tree_lb.dds
+
+newmtl k_df1_tree_lc_pic
+map_Kd k_df1_tree_lc.dds
+
+newmtl k_df1_tree_ld_pic
+map_Kd k_df1_tree_ld.dds
+
+newmtl k_df1_tree_le_pic
+map_Kd k_df1_tree_le.dds
+
+newmtl k_df1_tree_ma_pic
+map_Kd k_df1_tree_ma.dds
+
+newmtl k_df1_tree_mb_pic
+map_Kd k_df1_tree_mb.dds
+
+newmtl k_df1_tree_mc_pic
+map_Kd k_df1_tree_mc.dds
+
+newmtl k_df1_tree_trunc_a_pic
+map_Kd k_df1_tree_trunc_a.dds
+
+newmtl k_df1_walk_bridge_pic
+map_Kd k_df1_walk_bridge.dds
+
+newmtl k_df1_walk_bridge_fence_pic
+map_Kd k_df1_walk_bridge_fence.dds
+
+newmtl k_df1_walk_fence_c_pic
+map_Kd k_df1_walk_fence_c.dds
+
+newmtl k_df1_walk_fence_d_pic
+map_Kd k_df1_walk_fence_d.dds
+
+newmtl k_df1_walk_fence_e_pic
+map_Kd k_df1_walk_fence_e.dds
+
+newmtl k_df1_wall_a_pic
+map_Kd k_df1_wall_a.dds
+
+newmtl k_df1_wall_a_r_pic
+map_Kd k_df1_wall_a_r.dds
+
+newmtl k_df1_wall_b_pic
+map_Kd k_df1_wall_b.dds
+
+newmtl k_df1_wall_b_r_pic
+map_Kd k_df1_wall_b_r.dds
+
+newmtl k_df1_wall_c_pic
+map_Kd k_df1_wall_c.dds
+
+newmtl k_df1_wall_c_r_pic
+map_Kd k_df1_wall_c_r.dds
+
+newmtl k_df1_wall_e_pic
+map_Kd k_df1_wall_e.dds
+
+newmtl k_df1_wall_f_pic
+map_Kd k_df1_wall_f.dds
+
+newmtl k_df1_wall_green_pic
+map_Kd k_df1_wall_green.dds
+
+newmtl k_df1_wall_green_trees_pic
+map_Kd k_df1_wall_green_trees.dds
+
+newmtl k_df1_water_tank_pic
+map_Kd k_df1_water_tank.dds
+
+newmtl k_df1_wh_door_pic
+map_Kd k_df1_wh_door.dds
+
+newmtl k_df1_wh_roof_pic
+map_Kd k_df1_wh_roof.dds
+
+newmtl k_df1_wh_sign_pic
+map_Kd k_df1_wh_sign.dds
+
+newmtl k_df1_wh_syokuji_b_pic
+map_Kd k_df1_wh_syokuji_b.dds
+
+newmtl k_df1_wh_wall_pic
+map_Kd k_df1_wh_wall.dds
+
+newmtl k_df1_wh_win_pic
+map_Kd k_df1_wh_win.dds
+
+newmtl k_df1_woodpole_pic
+map_Kd k_df1_woodpole.dds
+
+newmtl k_df1_woodpole_face_pic
+map_Kd k_df1_woodpole_face.dds
+
+newmtl k_df1_woodsdw_pic
+map_Kd k_df1_woodsdw.dds
+
+newmtl k_df_gallery001_pic
+map_Kd k_df_gallery001.dds
+
+newmtl k_df_gallery002_pic
+map_Kd k_df_gallery002.dds
+
+newmtl k_df_gallery003_pic
+map_Kd k_df_gallery003.dds
+
+newmtl k_df_gallery004_pic
+map_Kd k_df_gallery004.dds
+
+newmtl k_df_gallery005_pic
+map_Kd k_df_gallery005.dds
+
+newmtl k_df_gallery006_pic
+map_Kd k_df_gallery006.dds
+
+newmtl k_df_gallery007_pic
+map_Kd k_df_gallery007.dds
+
+newmtl k_df_gallery008_pic
+map_Kd k_df_gallery008.dds
+
+newmtl k_df_gallery009_pic
+map_Kd k_df_gallery009.dds
+
+newmtl k_df_gallery010_pic
+map_Kd k_df_gallery010.dds
+
+newmtl k_df_gate_check_pic
+map_Kd k_df_gate_check.dds
+
+newmtl k_df_gate_check_wb_pic
+map_Kd k_df_gate_check_wb.dds
+
+newmtl k_df_gate_check_wr_pic
+map_Kd k_df_gate_check_wr.dds
+
+newmtl k_df_gate_finish_pic
+map_Kd k_df_gate_finish.dds
+
+newmtl k_df_gate_frame_pic
+map_Kd k_df_gate_frame.dds
+
+newmtl k_df_gate_start_pic
+map_Kd k_df_gate_start.dds
+
+newmtl k_df_sponsor_suzuki_pic
+map_Kd k_df_sponsor_suzuki.dds
+
+newmtl saku_pic
+map_Kd saku.dds
+
+newmtl tou_pic
+map_Kd tou.dds
+
+newmtl tou2_pic
+map_Kd tou2.dds
