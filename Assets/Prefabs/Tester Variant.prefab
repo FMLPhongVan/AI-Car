@@ -911,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3311311803080157842, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
       propertyPath: m_Name
-      value: Car Variant 1
+      value: Tester Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3311311803080157842, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
       propertyPath: m_Layer
@@ -1007,7 +1007,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3311311803080157842, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
   m_PrefabInstance: {fileID: 1020110777574671410}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5016959143785226875
+--- !u!114 &-7006056364879647737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2583955484008804000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22942f7a3b3b4fe43bde2bf715916545, type: 3}
+  m_Script: {fileID: 11500000, guid: 001499da91057654f883291c46313f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Network:
@@ -1027,16 +1027,9 @@ MonoBehaviour:
   TravelDistance: 0
   AverageSpeed: 0
   TimeElapsed: 0
-  BestFitness: 0
-  BestPopulationFitness: 0
-  OverallFitness: 0
-  DistanceMultiplier: 1
-  SpeedMultiplier: 0
-  SensorMultiplier: 0
   Alive: 1
-  _lastCheckpointDistance: 0
   _movement: 0
---- !u!114 &7925622141647910332
+--- !u!114 &2308546022568300225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1045,7 +1038,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2583955484008804000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6bbef19741b1184ca031a07d61062b8, type: 3}
+  m_Script: {fileID: 11500000, guid: dc72ec46a8e758642a17c3b6efe0da14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Sensors:
@@ -1076,21 +1069,6 @@ MonoBehaviour:
   _frontRightWheeTransform: {fileID: 216525589785510048}
   _rearLeftWheelTransform: {fileID: 8191121322450586044}
   _rearRightWheelTransform: {fileID: 1030642983543891615}
---- !u!114 &8205302284101232938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2583955484008804000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa8d9ad5d6cdaa242a5740ed7e52b222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentLap: 0
-  NextCheckPoint: 0
-  DistanceToNextCheckpoint: 0
 --- !u!146 &2706134321498606022 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 3145262460232535540, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}

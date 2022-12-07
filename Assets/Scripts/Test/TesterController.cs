@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class TesterController : MonoBehaviour
 {
     // Car & sensors;
-    private AIController _ai;
+    private TesterAIController _ai;
     private Rigidbody _carRigidBody;
     public List<CarSensors> Sensors;
-    private CarCheckpoint _carCheckpoint;
 
     public float Speed;
 
@@ -18,7 +17,7 @@ public class CarController : MonoBehaviour
     public bool PlayerStopped;
     public bool PlayerHitWall;
     public bool TimerStarted;
-    
+
     // Car physics properties
     Vector3 _startPostion;
     Quaternion _carRotation;
@@ -28,10 +27,10 @@ public class CarController : MonoBehaviour
     public float ForceInput;
     public float TargetSteeringAngle;
     public bool IsBraking = false;
-    
+
     private float _currentSteerAngle;
     private float _currentBrakeForce;
-    
+
     [SerializeField] private float _motorForce = 5000;
     [SerializeField] private float _brakeForce = 3000;
     [SerializeField] public float MaxSteeringAngle = 50f;
@@ -51,24 +50,23 @@ public class CarController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        _carCheckpoint = GetComponent<CarCheckpoint>();
         _carRigidBody = GetComponent<Rigidbody>();
         PlayerStopped = false;
         PlayerHitWall = false;
         TimerStarted = false;
-        _startPostion =gameObject.transform.position;
+        _startPostion = gameObject.transform.position;
         _carRotation = gameObject.transform.rotation;
     }
 
     void Start()
     {
-        _ai = gameObject.GetComponent<AIController>();
+        _ai = gameObject.GetComponent<TesterAIController>();
     }
 
     private void FixedUpdate()
     {
         if (!_ai.Alive) return;
-        _carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
+        //_carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
         Speed = _carRigidBody.velocity.magnitude;
         if (Speed < 0.1f)
         {
@@ -84,7 +82,7 @@ public class CarController : MonoBehaviour
             }
             else TimerStarted = true;
         }
-        
+
         HandleMotor();
         UpdateAllWheel();
         //_carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
@@ -138,12 +136,12 @@ public class CarController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Checkpoint"))
         {
-            _carCheckpoint.CheckHitCheckpoint(other.gameObject);
+            //_carCheckpoint.CheckHitCheckpoint(other.gameObject);
             return;
         }
         else if (other.gameObject.CompareTag("Path"))
         {
-            _carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
+            //_carRigidBody.velocity.Set(_carRigidBody.velocity.x, 0, _carRigidBody.velocity.z);
             //gameObject.transform.position.Set(gameObject.transform.position.x, 0, gameObject.transform.position.z);
             return;
         }
@@ -163,7 +161,7 @@ public class CarController : MonoBehaviour
         _carRigidBody.isKinematic = false;
         gameObject.transform.position = _startPostion;
         gameObject.transform.rotation = _carRotation;
-        
+
         _currentBrakeForce = 0f;
         _currentSteerAngle = 0f;
 
@@ -179,7 +177,5 @@ public class CarController : MonoBehaviour
         PlayerStopped = false;
         PlayerHitWall = false;
         TimerStarted = false;
-
-        _carCheckpoint.SetUpTrackCheckpoints();
     }
 }

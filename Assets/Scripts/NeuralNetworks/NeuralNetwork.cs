@@ -54,7 +54,7 @@ public class NeuralNetwork
         }
 
         // Make a Neural Net with those specifications
-        NeuralNetwork NN = new NeuralNetwork(numStrucutre);
+        NeuralNetwork NN = new (numStrucutre);
 
         // Get the encoded value
         string[] element = lines[1].Split(", ");
@@ -72,15 +72,15 @@ public class NeuralNetwork
 
         //Update our NN with the value
         NN.Decode(encoded);
-        this.Layers = NN.Layers;
-        this.LayerStructure = NN.LayerStructure;
-        this.Fitness = 0f;
-        this.FitnessRatio = 0f;
+        Layers = NN.Layers;
+        LayerStructure = NN.LayerStructure;
+        Fitness = 0f;
+        FitnessRatio = 0f;
     }
 
     public List<double> Encode()
     {
-        List<double> encoded = new List<double>();
+        List<double> encoded = new ();
 
         foreach (Layer layer in Layers)
         {
