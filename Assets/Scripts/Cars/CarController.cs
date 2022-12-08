@@ -103,7 +103,7 @@ public class CarController : MonoBehaviour
         _rearRightWheelCollider.brakeTorque = _currentBrakeForce;
 
 
-        _maxSteerAnglePerDeltaTime = 0.05f / Time.deltaTime;
+        _maxSteerAnglePerDeltaTime = 0.03f / Time.deltaTime;
         if (TargetSteeringAngle * MaxSteeringAngle > _currentSteerAngle)
         {
             _currentSteerAngle += _maxSteerAnglePerDeltaTime;
@@ -147,7 +147,7 @@ public class CarController : MonoBehaviour
             //gameObject.transform.position.Set(gameObject.transform.position.x, 0, gameObject.transform.position.z);
             return;
         }
-        else if (other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Canvas"))
         {
             //Physics.IgnoreCollision(GetComponent<Collider>(), other);
             return;

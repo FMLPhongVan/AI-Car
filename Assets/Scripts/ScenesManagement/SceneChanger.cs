@@ -7,6 +7,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class SceneChanger : MonoBehaviour
 {
+    public void MenuScene()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
     public void TestTerrainA()
     {
         SceneManager.LoadScene("TestTerrain_A");

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
+    [SerializeField] private Academy Academy;
     [SerializeField] private Vector3 offset;
     [SerializeField] private Transform target;
     [SerializeField] private float translateSpeed;
@@ -17,6 +18,16 @@ public class FollowCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!target.gameObject.GetComponent<AIController>().Alive)
+        {
+            for (int i = 0; i < Academy._aiControllers.Length; ++i)
+                if (Academy._aiControllers[i].Alive)
+                {
+                    target = Academy._aiControllers[i].transform;
+                    break;
+                }
+        }
+
         HandleTranslation();
         HandleRotation();
     }

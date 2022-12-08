@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Academy : MonoBehaviour
 {
+    public Canvas Canvas;
     public string FileName = "";
     public GameObject CarVariant;
     public int HiddenLayer = 1;
@@ -17,8 +19,9 @@ public class Academy : MonoBehaviour
     public float MutationRate = 0.05f;
     public float CrossoverRate = 0.5f;
     public Vector3 StartPosition;
+    public NeuralNetwork[] BestCarEachTrack;
+    public float CurrentBestFitness = -100000;
     public float BestGenomeFitness = -100000;
-    public AIController BestCar;
 
     public GeneticController _species;
     TracksManager _tracksManager;
@@ -60,7 +63,7 @@ public class Academy : MonoBehaviour
 
     void Start()
     {
-        BestCar = _aiControllers[0];
+        BestCarEachTrack = new NeuralNetwork[_tracksManager.Tracks.Count];
 
         for (int i = 0; i < NumberOfCarsPerGeneration; i++)
         {
@@ -71,24 +74,89 @@ public class Academy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // pause
+            if (Time.timeScale == 0)
+                Time.timeScale = 2f;
+            else
+                Time.timeScale = 0;
+        }
+
         for (int i = 0; i < _species.CurrentPopulation.Count; ++i)
         {
-            if (_aiControllers[i].Alive && BestGenomeFitness < _aiControllers[i].OverallFitness)
+            if (_aiControllers[i].Alive && CurrentBestFitness < _aiControllers[i].OverallFitness)
             {
-                BestGenomeFitness = _aiControllers[i].OverallFitness;
-                BestCar = _aiControllers[i];
+                CurrentBestFitness = _aiControllers[i].OverallFitness;
             }
         }
         
         if (MeetStopCondition())
         {
+            bool triggerSaveGene = false;
             for (int i = 0; i < _aiControllers.Length; ++i) _aiControllers[i].Stop();
+            uint currentTrack = _tracksManager.CurrentTrack;
+            for (int i = 0; i < _aiControllers.Length; ++i)
+            {
+                if (BestCarEachTrack[currentTrack] == null || BestCarEachTrack[currentTrack].Fitness < _aiControllers[i].Network.Fitness)
+                {
+                    //if (BestCarEachTrack[currentTrack] == null)
+                    BestCarEachTrack[currentTrack] = new NeuralNetwork(_aiControllers[i].Network.LayerStructure);
+                    BestCarEachTrack[currentTrack].Decode(_aiControllers[i].Network.Encode());
+                    BestCarEachTrack[currentTrack].Fitness = _aiControllers[i].Network.Fitness;
+                    triggerSaveGene = true;
+                }
+            }
+            for (int i = 0; i < BestCarEachTrack.Length; ++i)
+                if (BestCarEachTrack[i] != null && BestGenomeFitness < BestCarEachTrack[i].Fitness)
+                    BestGenomeFitness = BestCarEachTrack[i].Fitness;
+                
+            if (triggerSaveGene)
+            {
+                BestCarEachTrack[currentTrack].SaveGene("tmp/" + _tracksManager.Tracks[(int)currentTrack].name + ".txt");
+            }
             Debug.Log("Meet stop condition. Start a new generation.");
             SetUpNewGeneration();
             Generation++;
             // Sleep for 2 second before next gen
             
         }
+
+        TextMeshProUGUI[] textMeshProUGUIs = Canvas.GetComponentsInChildren<TextMeshProUGUI>();
+        for (int i = 0; i < textMeshProUGUIs.Length; ++i)
+        {
+            if (textMeshProUGUIs[i].name == "Info")
+                textMeshProUGUIs[i].text = "Generation: " + Generation + "\nTrack: " + _tracksManager.TrackName + "\nCTBF: " + CurrentBestFitness + "\nBest Fitness: " + BestGenomeFitness;
+        }
+    }
+
+    public void SaveModel(string fileName)
+    {
+        float tmp = -10000;
+        int diff = -1;
+        int choose = -1;
+        for (int i = 0; i < BestCarEachTrack.Length; ++i)
+        {
+            if (BestCarEachTrack[i] != null)
+            {
+                if (tmp < BestCarEachTrack[i].Fitness)
+                {
+                    tmp = BestCarEachTrack[i].Fitness;
+                    diff = _tracksManager.Tracks[i].GetComponent<Track>().Difficulty;
+                    choose = i;
+                }
+                else if (tmp == BestCarEachTrack[i].Fitness && _tracksManager.Tracks[i].GetComponent<Track>().Difficulty > diff)
+                {
+                    tmp = BestCarEachTrack[i].Fitness;
+                    diff = _tracksManager.Tracks[i].GetComponent<Track>().Difficulty;
+                    choose = i;
+                }
+            }
+        }
+
+        if (choose == -1)
+            _aiControllers[0].Network.SaveGene(fileName);
+        else BestCarEachTrack[choose].SaveGene(fileName);
     }
 
     private bool MeetStopCondition()
@@ -111,5 +179,7 @@ public class Academy : MonoBehaviour
             _aiControllers[i].Reset();
             _aiControllers[i].Network = _species.CurrentPopulation[i];
         }
+
+        CurrentBestFitness = -100000;
     }
 }

@@ -145,13 +145,12 @@ public class NeuralNetwork
         outputs[0] = activation(outputs[0]);
         outputs[1] = Math.Tanh(2 * outputs[1]);
         outputs[2] = activation(outputs[2]);
-        Debug.Log("Output: " + outputs[0] + ", " + outputs[1] + ", " + outputs[2]);
         return outputs;
     }
 
     public void Save()
     {
-        StreamWriter write = new StreamWriter("./records/trackC/neuralnet/nn" + Fitness + ".txt", true);
+        StreamWriter write = new StreamWriter("./Models/" + Fitness + ".txt", false);
 
         for (int i = 0; i < LayerStructure.Length - 1; ++i)
             write.Write(LayerStructure[i] + ", ");
@@ -169,26 +168,28 @@ public class NeuralNetwork
 
         write.Close();
     }
-
-    public void Save(String fileName)
+    
+    public void SaveGene(string fileName)
     {
-        StreamWriter write = new StreamWriter("./records/" + fileName + "/bestcar/bc" + (int)Fitness + ".txt", true);
-
-        for (int i = 0; i < LayerStructure.Length - 1; ++i)
-            write.Write(LayerStructure[i] + ", ");
-
-        write.Write(LayerStructure[LayerStructure.Length - 1] + "\n");
-        List<double> encoded = Encode();
-        for (int i = 0; i < encoded.Count - 1; i++)
         {
-            if (encoded[i] > 1f || encoded[i] < -1f) Debug.Log("Error: " + encoded[i]);
-            write.Write(encoded[i]);
-            write.Write(", ");
-        }
-        write.Write(encoded[encoded.Count - 1]);
-        write.Write("\n");
+            StreamWriter write = new("./Models/" + fileName, false);
 
-        write.Close();
+            for (int i = 0; i < LayerStructure.Length - 1; ++i)
+                write.Write(LayerStructure[i] + ", ");
+
+            write.Write(LayerStructure[LayerStructure.Length - 1] + "\n");
+            List<double> encoded = Encode();
+            for (int i = 0; i < encoded.Count - 1; i++)
+            {
+                if (encoded[i] > 1f || encoded[i] < -1f) Debug.Log("Error: " + encoded[i]);
+                write.Write(encoded[i].ToString("G", CultureInfo.InvariantCulture));
+                write.Write(", ");
+            }
+            write.Write(encoded[encoded.Count - 1]);
+            write.Write("\n");
+
+            write.Close();
+        }
     }
 
     private double sigmoid(double x)

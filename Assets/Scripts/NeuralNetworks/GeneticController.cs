@@ -110,7 +110,7 @@ public class GeneticController
 
         CurrentPopulation.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
         for (int i = 0; i < _populationSize; ++i) Debug.Log(i + " " + CurrentPopulation[i].Fitness);
-        CurrentPopulation[0].Save();
+        //CurrentPopulation[0].Save();
 
         AverageFitness = (float)PopulationFitness / CurrentPopulation.Count;
         NextPopulation.Add(CurrentPopulation[0]);
