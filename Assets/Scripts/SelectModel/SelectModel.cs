@@ -14,14 +14,20 @@ public class SelectModel : MonoBehaviour
 
     public void Start()
     {
-        DirectoryInfo dir = new DirectoryInfo("./records/");
-        FileInfo[] info = dir.GetFiles("*.*");
+        LoadListOfModel();
+    }
+    
+    public void LoadListOfModel()
+    {
+        DirectoryInfo dir = new DirectoryInfo("./Models/");
+        FileInfo[] info = dir.GetFiles("*.txt");
         TMPDropdown.options.Clear();
         foreach (FileInfo f in info)
         {
             TMPDropdown.options.Add(new TMP_Dropdown.OptionData() { text = f.Name });
         }
     }
+
     public void Update()
     {
         PlayerPrefs.SetString("model", TMPDropdown.options[TMPDropdown.value].text);
