@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Track : MonoBehaviour
 {
+    public int Difficulty = 1;
     public List<GameObject> Checkpoints;
 
     // Start is called before the first frame update

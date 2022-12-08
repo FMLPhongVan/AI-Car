@@ -17,8 +17,9 @@ public class Academy : MonoBehaviour
     public float MutationRate = 0.05f;
     public float CrossoverRate = 0.5f;
     public Vector3 StartPosition;
+    public NeuralNetwork[] BestCarEachTrack;
+    public float CurrentBestFitness = -100000;
     public float BestGenomeFitness = -100000;
-    public AIController BestCar;
 
     public GeneticController _species;
     TracksManager _tracksManager;
@@ -60,7 +61,7 @@ public class Academy : MonoBehaviour
 
     void Start()
     {
-        BestCar = _aiControllers[0];
+        BestCarEachTrack = new NeuralNetwork[_tracksManager.Tracks.Count];
 
         for (int i = 0; i < NumberOfCarsPerGeneration; i++)
         {
@@ -73,16 +74,36 @@ public class Academy : MonoBehaviour
     {
         for (int i = 0; i < _species.CurrentPopulation.Count; ++i)
         {
-            if (_aiControllers[i].Alive && BestGenomeFitness < _aiControllers[i].OverallFitness)
+            if (_aiControllers[i].Alive && CurrentBestFitness < _aiControllers[i].OverallFitness)
             {
-                BestGenomeFitness = _aiControllers[i].OverallFitness;
-                BestCar = _aiControllers[i];
+                CurrentBestFitness = _aiControllers[i].OverallFitness;
             }
         }
         
         if (MeetStopCondition())
         {
+            bool triggerSaveGene = false;
             for (int i = 0; i < _aiControllers.Length; ++i) _aiControllers[i].Stop();
+            uint currentTrack = _tracksManager.CurrentTrack;
+            for (int i = 0; i < _aiControllers.Length; ++i)
+            {
+                if (BestCarEachTrack[currentTrack] == null || BestCarEachTrack[currentTrack].Fitness < _aiControllers[i].Network.Fitness)
+                {
+                    //if (BestCarEachTrack[currentTrack] == null)
+                    BestCarEachTrack[currentTrack] = new NeuralNetwork(_aiControllers[i].Network.LayerStructure);
+                    BestCarEachTrack[currentTrack].Decode(_aiControllers[i].Network.Encode());
+                    BestCarEachTrack[currentTrack].Fitness = _aiControllers[i].Network.Fitness;
+                    triggerSaveGene = true;
+                }
+            }
+            for (int i = 0; i < BestCarEachTrack.Length; ++i)
+                if (BestCarEachTrack[i] != null && BestGenomeFitness < BestCarEachTrack[i].Fitness)
+                    BestGenomeFitness = BestCarEachTrack[i].Fitness;
+                
+            if (triggerSaveGene)
+            {
+                BestCarEachTrack[currentTrack].SaveGene("tmp/" + _tracksManager.Tracks[(int)currentTrack].name + ".txt");
+            }
             Debug.Log("Meet stop condition. Start a new generation.");
             SetUpNewGeneration();
             Generation++;
@@ -111,5 +132,7 @@ public class Academy : MonoBehaviour
             _aiControllers[i].Reset();
             _aiControllers[i].Network = _species.CurrentPopulation[i];
         }
+
+        CurrentBestFitness = -100000;
     }
 }

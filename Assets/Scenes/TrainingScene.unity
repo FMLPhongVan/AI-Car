@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 2
   Checkpoints: []
 --- !u!4 &68618919
 Transform:
@@ -2138,6 +2139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 1
   Checkpoints: []
 --- !u!1001 &300384451
 PrefabInstance:
@@ -6691,6 +6693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 4
   Checkpoints: []
 --- !u!1001 &1120729184
 PrefabInstance:
@@ -8184,6 +8187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 3
   Checkpoints: []
 --- !u!1001 &1523334751
 PrefabInstance:
@@ -8338,6 +8342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 4
   Checkpoints: []
 --- !u!4 &1546052515
 Transform:
@@ -8516,6 +8521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea515c6c2b26dcf42aed06f2c7837417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 1
   Checkpoints: []
 --- !u!1001 &1611983629
 PrefabInstance:
