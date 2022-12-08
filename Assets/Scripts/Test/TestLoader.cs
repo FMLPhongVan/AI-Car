@@ -12,6 +12,6 @@ public class TestLoader : MonoBehaviour
     {
         Time.timeScale = 2f;
         GameObject car = Instantiate(TestCarVariant, StartPosition, Quaternion.identity);
-        car.GetComponent<TesterAIController>().Network = new NeuralNetwork("./records/" + Model + ".txt");
+        car.GetComponent<TesterAIController>().Network = new NeuralNetwork("./records/" + Model);
     }
 }

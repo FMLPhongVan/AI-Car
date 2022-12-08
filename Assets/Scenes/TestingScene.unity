@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e35e1dce13ac6c4fa3bbf4fd561d27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Academy: {fileID: 0}
   offset: {x: 0, y: 4, z: -7}
   target: {fileID: 0}
   translateSpeed: 6
