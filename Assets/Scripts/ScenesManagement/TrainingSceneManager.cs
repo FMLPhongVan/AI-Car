@@ -13,6 +13,7 @@ public class TrainingSceneManager : MonoBehaviour
     void Start()
     {
         StopTrainingBtn.onClick.AddListener(StopTrainingAndSave);
+        ExitBtn.onClick.AddListener(() => GameObject.Find("SceneChanger").GetComponent<SceneChanger>().MenuScene());
     }
 
     private void StopTrainingAndSave()

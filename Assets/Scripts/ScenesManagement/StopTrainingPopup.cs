@@ -20,5 +20,6 @@ public class StopTrainingPopup : MonoBehaviour
             name = "Model" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
 
         GameObject.Find("Academy").GetComponent<Academy>().SaveModel(name + ".txt");
+        GameObject.Find("SceneChanger").GetComponent<SceneChanger>().MenuScene();
     }
 }
