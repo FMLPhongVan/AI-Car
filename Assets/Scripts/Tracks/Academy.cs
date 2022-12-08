@@ -74,6 +74,15 @@ public class Academy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // pause
+            if (Time.timeScale == 0)
+                Time.timeScale = 2f;
+            else
+                Time.timeScale = 0;
+        }
+
         for (int i = 0; i < _species.CurrentPopulation.Count; ++i)
         {
             if (_aiControllers[i].Alive && CurrentBestFitness < _aiControllers[i].OverallFitness)
@@ -119,6 +128,35 @@ public class Academy : MonoBehaviour
             if (textMeshProUGUIs[i].name == "Info")
                 textMeshProUGUIs[i].text = "Generation: " + Generation + "\nTrack: " + _tracksManager.TrackName + "\nCTBF: " + CurrentBestFitness + "\nBest Fitness: " + BestGenomeFitness;
         }
+    }
+
+    public void SaveModel(string fileName)
+    {
+        float tmp = -10000;
+        int diff = -1;
+        int choose = -1;
+        for (int i = 0; i < BestCarEachTrack.Length; ++i)
+        {
+            if (BestCarEachTrack[i] != null)
+            {
+                if (tmp < BestCarEachTrack[i].Fitness)
+                {
+                    tmp = BestCarEachTrack[i].Fitness;
+                    diff = _tracksManager.Tracks[i].GetComponent<Track>().Difficulty;
+                    choose = i;
+                }
+                else if (tmp == BestCarEachTrack[i].Fitness && _tracksManager.Tracks[i].GetComponent<Track>().Difficulty > diff)
+                {
+                    tmp = BestCarEachTrack[i].Fitness;
+                    diff = _tracksManager.Tracks[i].GetComponent<Track>().Difficulty;
+                    choose = i;
+                }
+            }
+        }
+
+        if (choose == -1)
+            _aiControllers[0].Network.SaveGene(fileName);
+        else BestCarEachTrack[choose].SaveGene(fileName);
     }
 
     private bool MeetStopCondition()
