@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Academy : MonoBehaviour
 {
+    public Canvas Canvas;
     public string FileName = "";
     public GameObject CarVariant;
     public int HiddenLayer = 1;
@@ -109,6 +111,13 @@ public class Academy : MonoBehaviour
             Generation++;
             // Sleep for 2 second before next gen
             
+        }
+
+        TextMeshProUGUI[] textMeshProUGUIs = Canvas.GetComponentsInChildren<TextMeshProUGUI>();
+        for (int i = 0; i < textMeshProUGUIs.Length; ++i)
+        {
+            if (textMeshProUGUIs[i].name == "Info")
+                textMeshProUGUIs[i].text = "Generation: " + Generation + "\nTrack: " + _tracksManager.TrackName + "\nCTBF: " + CurrentBestFitness + "\nBest Fitness: " + BestGenomeFitness;
         }
     }
 

@@ -147,7 +147,7 @@ public class CarController : MonoBehaviour
             //gameObject.transform.position.Set(gameObject.transform.position.x, 0, gameObject.transform.position.z);
             return;
         }
-        else if (other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Canvas"))
         {
             //Physics.IgnoreCollision(GetComponent<Collider>(), other);
             return;

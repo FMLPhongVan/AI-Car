@@ -8,6 +8,7 @@ TagManager:
   - Path
   - Wall
   - Track
+  - Canvas
   layers:
   - Default
   - TransparentFX
